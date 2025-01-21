@@ -1,88 +1,97 @@
 <template>
   <div class="rank-container">
-    <h1>Leaderboard</h1>
-    <div class="ranking-list">
+    <h1>Ranking</h1>
+    <div class="rank-list">
       <div
-        v-for="(player, index) in top10"
+        v-for="(player, index) in rankings"
         :key="index"
-        :class="['rank-item', { top3: index < 3 }]"
+        class="rank-item"
+        :class="{ highlight: player.name === myRank.name }"
       >
-        <span class="rank">{{ index + 1 }}</span>
-        <span class="name">{{ player.name }}</span>
-        <span class="score">{{ player.score }}</span>
+        <p>{{ index + 1 }}. {{ player.name }} - {{ player.score }} pts</p>
       </div>
     </div>
-    <div class="your-rank">
+    <div class="my-rank">
       <h2>Your Rank</h2>
-      <div class="rank-item highlight">
-        <span class="rank">{{ yourRank.rank }}</span>
-        <span class="name">{{ yourRank.name }}</span>
-        <span class="score">{{ yourRank.score }}</span>
-      </div>
+      <p>{{ myRank.name }} - {{ myRank.score }} pts</p>
     </div>
+    <button class="back-button" @click="backToGame">Back to Game</button>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+// Example ranking data
+const rankings = [
+  { name: 'Alice', score: 100 },
+  { name: 'Bob', score: 80 },
+  { name: 'Charlie', score: 60 },
+  { name: 'Dave', score: 40 },
+  { name: 'Eve', score: 20 },
+];
+
+// Example user rank (this would typically be dynamic)
+const myRank = { name: 'You', score: 50 };
+
+const backToGame = () => {
+  router.push('/'); // Navigate back to the game start screen
+};
+</script>
+
 <script>
 export default {
   name: 'RankPage',
 };
 </script>
-<script setup>
-import { ref } from 'vue';
-
-const top10 = ref([
-  { name: 'Alice', score: 200 },
-  { name: 'Bob', score: 180 },
-  { name: 'Charlie', score: 160 },
-  { name: 'Dave', score: 140 },
-  { name: 'Eve', score: 120 },
-  { name: 'Frank', score: 100 },
-  { name: 'Grace', score: 80 },
-  { name: 'Hank', score: 60 },
-  { name: 'Ivy', score: 40 },
-  { name: 'Jack', score: 20 },
-]);
-
-const yourRank = ref({ rank: 15, name: 'You', score: 50 });
-</script>
 
 <style>
 .rank-container {
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   font-family: Arial, sans-serif;
   color: #333;
 }
-.ranking-list {
-  margin-top: 20px;
+.rank-list {
+  margin: 20px 0;
 }
 .rank-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-.rank-item.top3 {
-  font-weight: bold;
-  color: #f39c12;
+  margin: 10px 0;
+  font-size: 18px;
 }
 .rank-item.highlight {
   font-weight: bold;
-  color: #27ae60;
-  background: #ecf0f1;
+  color: #007bff;
 }
-.rank {
-  font-size: 1.2rem;
+.my-rank {
+  margin-top: 20px;
+  padding: 15px 20px;
+  background-color: #ffcc00;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.name {
-  flex: 1;
-  text-align: left;
-  margin-left: 10px;
+.back-button {
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
-.score {
-  font-size: 1.2rem;
-}
-.your-rank {
-  margin-top: 40px;
+.back-button:hover {
+  background-color: #0056b3;
 }
 </style>

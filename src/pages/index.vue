@@ -2,22 +2,24 @@
   <div class="app">
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
-        <button class="start-button" @click="startGame">START</button>
-        <button class="rank-button" @click="goToRank">Go to Rankings</button>
+        <button class="start-button" @click="startGame">GAME START</button>
       </div>
     </div>
     <div v-else>
       <div v-if="timerWidth > 0">
-        <div class="score-container">Score: {{ score }}</div>
         <div class="timer-container">
+          <p class="timer-label">Time!</p>
           <div class="timer-bar" :style="{ width: timerWidth + '%' }"></div>
         </div>
+        <div class="score-container">Score: {{ score }}</div>
         <div class="image-container">
           <img :src="currentImage" alt="Random Image" />
         </div>
-        <p>Press the correct key to change the image!</p>
-        <div class="key-list">
-          <p>Random Key List: {{ formattedKeyList }}</p>
+        <div class="key-list-container">
+          <div class="key-list-box">
+            <p class="key-list-label">Random Key List:</p>
+            <p class="keys">{{ formattedKeyList }}</p>
+          </div>
         </div>
         <div v-if="errorMessage" class="error-message">
           <p>{{ errorMessage }}</p>
@@ -26,8 +28,14 @@
       <div v-else>
         <div class="popup-overlay">
           <div class="popup">
+            <input
+              type="text"
+              v-model="nickname"
+              class="nickname-input"
+              placeholder="Enter your nickname"
+            />
             <button class="start-button" @click="startGame">RESTART</button>
-            <button class="rank-button" @click="goToRank">
+            <button class="rank-button" :disabled="!nickname" @click="goToRank">
               Go to Rankings
             </button>
           </div>
@@ -37,36 +45,29 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HomePage',
-};
-</script>
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+
+// Import images directly
+import Dog1_1 from '../assets/dog1_1.png';
+import Dog1_2 from '../assets/dog1_2.png';
+import Dog1_3 from '../assets/dog1_3.png';
+import Dog1_4 from '../assets/dog1_4.png';
+import Dog1_5 from '../assets/dog1_5.png';
 
 const router = useRouter();
 
-const images = [
-  'https://github.com/user-attachments/assets/b530963e-5d2b-4051-b889-401c74559c9b',
-  'https://github.com/user-attachments/assets/7da13815-ad00-4906-adcc-380108bbeb9b',
-  'https://github.com/user-attachments/assets/a3f96357-928a-459a-90ec-b582f0568059',
-  'https://github.com/user-attachments/assets/da7c20a6-eed1-4867-987a-50a43b21dade',
-  'https://github.com/user-attachments/assets/5d101c51-c21e-42f9-9e4d-7472620e8c6a',
-];
+const images = [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5];
 
 const currentImageIndex = ref(0);
 const keyList = ref([]);
-const currentKeyIndex = ref(0);
-const keyPressCount = ref(0);
 const errorMessage = ref('');
-const completed = ref(false);
-const lastImageTimeout = ref(null);
 const showPopup = ref(true);
 const timerWidth = ref(100);
-const timerInterval = ref(null);
 const score = ref(0);
+const nickname = ref('');
+const currentKeyIndex = ref(0);
 
 const currentImage = computed(() => images[currentImageIndex.value]);
 
@@ -99,12 +100,11 @@ const startGame = () => {
 
 const startTimer = () => {
   timerWidth.value = 100;
-  timerInterval.value = setInterval(() => {
+  const timerInterval = setInterval(() => {
     if (timerWidth.value > 0) {
-      timerWidth.value -= 5; // Decrease by 5% every second
+      timerWidth.value -= 5;
     } else {
-      clearInterval(timerInterval.value);
-      timerInterval.value = null;
+      clearInterval(timerInterval);
     }
   }, 1000);
 };
@@ -125,73 +125,42 @@ const generateRandomKeys = () => {
   keyList.value = randomKeys;
 };
 
-const changeImage = () => {
-  if (currentImageIndex.value < images.length - 1) {
-    currentImageIndex.value++;
-  } else {
-    completed.value = true;
-    lastImageTimeout.value = setTimeout(() => {
-      resetGame();
-    }, 2000); // Display last image for 2 seconds
-  }
-};
-
-const resetGame = () => {
-  currentImageIndex.value = 0;
-  completed.value = false;
-  generateRandomKeys();
-  currentKeyIndex.value = 0;
-  keyPressCount.value = 0;
-  errorMessage.value = '';
-  if (lastImageTimeout.value) {
-    clearTimeout(lastImageTimeout.value);
-    lastImageTimeout.value = null;
-  }
-};
-
-const handleKeydown = (event) => {
-  if (completed.value) {
-    resetGame();
-    return;
-  }
-
-  const currentKey = keyList.value[currentKeyIndex.value];
-  if (event.key === currentKey) {
+const handleKeyPress = (event) => {
+  if (keyList.value[currentKeyIndex.value] === event.key) {
     errorMessage.value = '';
     currentKeyIndex.value++;
-    keyPressCount.value++;
-
-    if (keyPressCount.value % 2 === 0) {
-      changeImage();
-    }
 
     if (currentKeyIndex.value >= keyList.value.length) {
-      score.value += 20; // Increment score by 20
-      resetGame();
+      score.value += 20;
+      currentKeyIndex.value = 0;
+      currentImageIndex.value = (currentImageIndex.value + 1) % images.length;
     }
   } else {
-    errorMessage.value = 'Incorrect key! Restarting from the beginning.';
-    resetGame(); // Reset everything, including the image
+    errorMessage.value = 'Incorrect key! Restarting...';
+    currentKeyIndex.value = 0;
+
+    setTimeout(() => {
+      errorMessage.value = '';
+    }, 2000); // Clear error message after 2 seconds
   }
 };
 
 const goToRank = () => {
-  router.push('/rank');
+  if (nickname.value.trim()) {
+    router.push('/rank'); // Navigate to ranking screen
+  }
 };
 
 onMounted(() => {
-  window.addEventListener('keydown', handleKeydown);
+  generateRandomKeys();
+  window.addEventListener('keydown', handleKeyPress);
 });
+</script>
 
-onBeforeUnmount(() => {
-  window.removeEventListener('keydown', handleKeydown);
-  if (lastImageTimeout.value) {
-    clearTimeout(lastImageTimeout.value);
-  }
-  if (timerInterval.value) {
-    clearInterval(timerInterval.value);
-  }
-});
+<script>
+export default {
+  name: 'HomePage',
+};
 </script>
 
 <style>
@@ -200,24 +169,72 @@ body {
   padding: 0;
   background: url('@/assets/game_background.png') no-repeat center center fixed;
   background-size: cover;
+  overflow: hidden;
 }
 .app {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   font-family: Arial, sans-serif;
-  margin-top: 50px;
   color: white;
+  overflow: hidden;
+}
+.timer-container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 150px;
+  text-align: center;
+}
+.timer-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: white;
+}
+.timer-bar {
+  height: 20px;
+  background: #4caf50;
+  border-radius: 10px;
+  transition: width 1s linear;
+}
+.score-container {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
 .image-container img {
-  width: 150px;
-  height: 150px;
-  border: 1px solid #ccc;
+  width: 300px;
+  height: 300px;
+  border: 2px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-.key-list {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
-  font-size: 14px;
-  color: white;
+}
+.key-list-container {
+  margin-top: 40px;
+}
+.key-list-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.key-list-label {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+.keys {
+  font-size: 35px;
+  font-weight: bold;
+  color: #ffcc00;
 }
 .error-message {
   margin-top: 20px;
@@ -243,6 +260,32 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+.nickname-input {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  width: 80%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.rank-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.rank-button {
+  background-color: #3498db; /* Change button color to desired blue */
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.rank-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
 .start-button {
   background-color: #ffcc00;
   color: #333;
@@ -253,61 +296,5 @@ body {
   border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-.start-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-.start-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
-}
-.rank-button {
-  background-color: #007bff;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 50px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-.rank-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-.rank-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
-}
-.timer-container {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  height: 20px;
-  background: #ccc;
-  margin: 20px auto;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.timer-bar {
-  height: 100%;
-  background: #4caf50;
-  transition: width 1s linear;
-}
-.score-container {
-  position: fixed;
-  top: 10px;
-  right: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
 }
 </style>
