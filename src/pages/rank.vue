@@ -2,7 +2,7 @@
   <div class="rank-container">
     <h1>Leaderboard</h1>
     <div class="ranking-list">
-      <div 
+      <div
         v-for="(player, index) in top10"
         :key="index"
         :class="['rank-item', { top3: index < 3 }]"
@@ -24,8 +24,8 @@
 </template>
 <script>
 export default {
-  name: 'RankPage'
-}
+  name: 'RankPage',
+};
 </script>
 <script setup>
 import { ref } from 'vue';

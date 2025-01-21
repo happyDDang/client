@@ -27,7 +27,9 @@
         <div class="popup-overlay">
           <div class="popup">
             <button class="start-button" @click="startGame">RESTART</button>
-            <button class="rank-button" @click="goToRank">Go to Rankings</button>
+            <button class="rank-button" @click="goToRank">
+              Go to Rankings
+            </button>
           </div>
         </div>
       </div>
@@ -37,8 +39,8 @@
 
 <script>
 export default {
-  name: 'HomePage'
-}
+  name: 'HomePage',
+};
 </script>
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
@@ -47,18 +49,18 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const images = [
-  "https://github.com/user-attachments/assets/b530963e-5d2b-4051-b889-401c74559c9b",
-  "https://github.com/user-attachments/assets/7da13815-ad00-4906-adcc-380108bbeb9b",
-  "https://github.com/user-attachments/assets/a3f96357-928a-459a-90ec-b582f0568059",
-  "https://github.com/user-attachments/assets/da7c20a6-eed1-4867-987a-50a43b21dade",
-  "https://github.com/user-attachments/assets/5d101c51-c21e-42f9-9e4d-7472620e8c6a",
+  'https://github.com/user-attachments/assets/b530963e-5d2b-4051-b889-401c74559c9b',
+  'https://github.com/user-attachments/assets/7da13815-ad00-4906-adcc-380108bbeb9b',
+  'https://github.com/user-attachments/assets/a3f96357-928a-459a-90ec-b582f0568059',
+  'https://github.com/user-attachments/assets/da7c20a6-eed1-4867-987a-50a43b21dade',
+  'https://github.com/user-attachments/assets/5d101c51-c21e-42f9-9e4d-7472620e8c6a',
 ];
 
 const currentImageIndex = ref(0);
 const keyList = ref([]);
 const currentKeyIndex = ref(0);
 const keyPressCount = ref(0);
-const errorMessage = ref("");
+const errorMessage = ref('');
 const completed = ref(false);
 const lastImageTimeout = ref(null);
 const showPopup = ref(true);
@@ -72,21 +74,21 @@ const formattedKeyList = computed(() => {
   return keyList.value
     .map((key) => {
       switch (key) {
-        case "ArrowUp":
-          return "⬆️";
-        case "ArrowDown":
-          return "⬇️";
-        case "ArrowLeft":
-          return "⬅️";
-        case "ArrowRight":
-          return "➡️";
-        case " ":
-          return "⭕";
+        case 'ArrowUp':
+          return '⬆️';
+        case 'ArrowDown':
+          return '⬇️';
+        case 'ArrowLeft':
+          return '⬅️';
+        case 'ArrowRight':
+          return '➡️';
+        case ' ':
+          return '⭕';
         default:
           return key;
       }
     })
-    .join(", ");
+    .join(', ');
 });
 
 const startGame = () => {
@@ -108,12 +110,14 @@ const startTimer = () => {
 };
 
 const generateRandomKeys = () => {
-  const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "];
+  const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '];
   const randomKeys = [];
   while (randomKeys.length < 8) {
     const remainingKeys = keys.filter((key) => !randomKeys.includes(key));
     if (remainingKeys.length > 0) {
-      randomKeys.push(remainingKeys[Math.floor(Math.random() * remainingKeys.length)]);
+      randomKeys.push(
+        remainingKeys[Math.floor(Math.random() * remainingKeys.length)]
+      );
     } else {
       randomKeys.push(keys[Math.floor(Math.random() * keys.length)]);
     }
@@ -138,7 +142,7 @@ const resetGame = () => {
   generateRandomKeys();
   currentKeyIndex.value = 0;
   keyPressCount.value = 0;
-  errorMessage.value = "";
+  errorMessage.value = '';
   if (lastImageTimeout.value) {
     clearTimeout(lastImageTimeout.value);
     lastImageTimeout.value = null;
@@ -153,7 +157,7 @@ const handleKeydown = (event) => {
 
   const currentKey = keyList.value[currentKeyIndex.value];
   if (event.key === currentKey) {
-    errorMessage.value = "";
+    errorMessage.value = '';
     currentKeyIndex.value++;
     keyPressCount.value++;
 
@@ -166,21 +170,21 @@ const handleKeydown = (event) => {
       resetGame();
     }
   } else {
-    errorMessage.value = "Incorrect key! Restarting from the beginning.";
+    errorMessage.value = 'Incorrect key! Restarting from the beginning.';
     resetGame(); // Reset everything, including the image
   }
 };
 
 const goToRank = () => {
-  router.push("/rank");
+  router.push('/rank');
 };
 
 onMounted(() => {
-  window.addEventListener("keydown", handleKeydown);
+  window.addEventListener('keydown', handleKeydown);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("keydown", handleKeydown);
+  window.removeEventListener('keydown', handleKeydown);
   if (lastImageTimeout.value) {
     clearTimeout(lastImageTimeout.value);
   }
@@ -194,7 +198,7 @@ onBeforeUnmount(() => {
 body {
   margin: 0;
   padding: 0;
-  background: url("@/assets/game_background.png") no-repeat center center fixed;
+  background: url('@/assets/game_background.png') no-repeat center center fixed;
   background-size: cover;
 }
 .app {
@@ -249,7 +253,9 @@ body {
   border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .start-button:hover {
   transform: scale(1.05);
@@ -269,7 +275,9 @@ body {
   border-radius: 50px;
   margin-top: 10px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .rank-button:hover {
   transform: scale(1.05);
