@@ -93,6 +93,8 @@ const formattedKeyList = computed(() => {
 });
 
 const startGame = () => {
+  score.value = 0;
+  window.addEventListener('keydown', handleKeyPress);
   showPopup.value = false;
   generateRandomKeys();
   startTimer();
@@ -104,6 +106,7 @@ const startTimer = () => {
     if (timerWidth.value > 0) {
       timerWidth.value -= 5;
     } else {
+      window.removeEventListener('keydown', handleKeyPress);
       clearInterval(timerInterval);
     }
   }, 1000);
@@ -126,14 +129,18 @@ const generateRandomKeys = () => {
 };
 
 const handleKeyPress = (event) => {
+  if (timerWidth.value <= 0) return;
+
   if (keyList.value[currentKeyIndex.value] === event.key) {
     errorMessage.value = '';
     currentKeyIndex.value++;
+    createFirework(); // 폭죽 효과 실행
 
     if (currentKeyIndex.value >= keyList.value.length) {
       score.value += 20;
       currentKeyIndex.value = 0;
       currentImageIndex.value = (currentImageIndex.value + 1) % images.length;
+      generateRandomKeys();
     }
   } else {
     errorMessage.value = 'Incorrect key! Restarting...';
@@ -141,7 +148,29 @@ const handleKeyPress = (event) => {
 
     setTimeout(() => {
       errorMessage.value = '';
-    }, 2000); // Clear error message after 2 seconds
+    }, 2000);
+  }
+};
+
+const createFirework = () => {
+  const container = document.createElement('div');
+  container.className = 'firework-container';
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 10; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'firework';
+    const angle = (Math.PI * 2 * i) / 10; // 360도를 10개로 분산
+    const distance = Math.random() * 100 + 50; // 랜덤 거리
+
+    particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+    particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+    container.appendChild(particle);
+
+    // 애니메이션 끝난 후 제거
+    particle.addEventListener('animationend', () => {
+      container.remove();
+    });
   }
 };
 
@@ -153,7 +182,6 @@ const goToRank = () => {
 
 onMounted(() => {
   generateRandomKeys();
-  window.addEventListener('keydown', handleKeyPress);
 });
 </script>
 
@@ -296,5 +324,35 @@ body {
   border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+}
+
+.firework-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.firework {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ffcc00;
+  border-radius: 50%;
+  animation: explode 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0.5);
+    opacity: 0;
+  }
 }
 </style>
