@@ -8,16 +8,45 @@
     <div v-else>
       <div v-if="timerWidth > 0">
         <div class="timer-container">
-          <p class="timer-label">Time!</p>
+          <!-- <font-awesome-icon class="shake-icon" icon="fa-solid fas fa-clock" /> -->
+          <div class="shake-icon">
+            <img :src="Clock" alt="Clock Image" class="clock" />
+            <p class="timer-label">Time!</p>
+          </div>
           <div class="timer-bar" :style="{ width: timerWidth + '%' }"></div>
         </div>
         <div class="score-container">Score: {{ score }}</div>
         <div class="image-container">
-          <img :src="currentImage" alt="Random Image" />
+          <div>
+            <div class="animated-icons">
+              <div class="shake-icon">
+                <img
+                  :src="Bubble"
+                  alt="Bubble"
+                  :style="{
+                    top: bubblePostion.top + 'px',
+                    left: bubblePostion.left + 'px',
+                  }"
+                />
+              </div>
+              <div class="shake-icon">
+                <img
+                  :src="ShowerHead"
+                  alt="Shower Head"
+                  :style="{
+                    top: showerPostion.top + 'px',
+                    left: showerPostion.left + 'px',
+                  }"
+                />
+              </div>
+            </div>
+
+            <img :src="currentImage" alt="Random Image" class="dog-image" />
+          </div>
         </div>
         <div class="key-list-container">
           <div class="key-list-box">
-            <p class="key-list-label">Random Key List:</p>
+            <p class="key-list-label">아이 꺠끗해!</p>
             <p class="keys">{{ formattedKeyList }}</p>
           </div>
         </div>
@@ -48,6 +77,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 // Import images directly
 import Dog1_1 from '../assets/dog1_1.png';
@@ -55,6 +85,9 @@ import Dog1_2 from '../assets/dog1_2.png';
 import Dog1_3 from '../assets/dog1_3.png';
 import Dog1_4 from '../assets/dog1_4.png';
 import Dog1_5 from '../assets/dog1_5.png';
+import Clock from '../assets/clock.png';
+import ShowerHead from '../assets/shower_head.png';
+import Bubble from '../assets/bubble.png';
 
 const router = useRouter();
 
@@ -75,6 +108,9 @@ const timerWidth = ref(100);
 const score = ref(0);
 const nickname = ref('');
 const currentKeyIndex = ref(0);
+
+const bubblePostion = ref({ top: 270, left: 30 });
+const showerPostion = ref({ top: 0, left: 270 });
 
 const currentImage = computed(
   () => images[currentImageIndex.value][currentDogStep.value]
@@ -118,7 +154,7 @@ const startTimer = () => {
       window.removeEventListener('keydown', handleKeyPress);
       clearInterval(timerInterval);
     }
-  }, 1000);
+  }, 10000);
 };
 
 const generateRandomKeys = () => {
@@ -143,7 +179,21 @@ const handleKeyPress = (event) => {
   if (keyList.value[currentKeyIndex.value] === event.key) {
     errorMessage.value = '';
     currentKeyIndex.value++;
-    createFirework(); // 폭죽 효과 실행
+
+    // 아이콘 애니메이션 재시작
+    // const animatedIcons = document.querySelector('.animated-icons');
+    // animatedIcons.classList.remove('animate');
+    // void animatedIcons.offsetWidth; // 리플로우 트릭
+    // animatedIcons.classList.add('animate');
+
+    bubblePostion.value = {
+      top: Math.floor(Math.random() * 300),
+      left: Math.floor(Math.random() * 300),
+    };
+    showerPostion.value = {
+      top: Math.floor(Math.random() * 300),
+      left: Math.floor(Math.random() * 300),
+    };
 
     // 강아지 단계 증가
     if (currentKeyIndex.value % 2 === 0) {
@@ -168,31 +218,9 @@ const handleKeyPress = (event) => {
   }
 };
 
-const createFirework = () => {
-  const container = document.createElement('div');
-  container.className = 'firework-container';
-  document.body.appendChild(container);
-
-  for (let i = 0; i < 10; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'firework';
-    const angle = (Math.PI * 2 * i) / 10; // 360도를 10개로 분산
-    const distance = Math.random() * 100 + 50; // 랜덤 거리
-
-    particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-    particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-    container.appendChild(particle);
-
-    // 애니메이션 끝난 후 제거
-    particle.addEventListener('animationend', () => {
-      container.remove();
-    });
-  }
-};
-
 const goToRank = () => {
   if (nickname.value.trim()) {
-    router.push('/rank'); // Navigate to ranking screen
+    router.push('/rank');
   }
 };
 
@@ -231,32 +259,61 @@ body {
   left: 10px;
   width: 150px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
+
 .timer-label {
-  font-size: 16px;
+  font-size: 30px;
   font-weight: bold;
   margin-bottom: 5px;
   color: white;
 }
+
 .timer-bar {
   height: 20px;
   background: #4caf50;
   border-radius: 10px;
   transition: width 1s linear;
 }
+
+.clock {
+  width: 70px;
+  height: 70px;
+}
+
+/* 시계 아이콘 */
+.shake-icon {
+  font-size: 24px;
+  color: white;
+  animation: shake 0.5s infinite; /* 떨림 애니메이션 */
+  display: block;
+  margin: 0 auto 5px auto; /* 중앙 정렬 */
+  height: 24px;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20%,
+  60% {
+    transform: translate(-2px, 0);
+  }
+  40%,
+  80% {
+    transform: translate(2px, 0);
+  }
+}
+
+/* 나머지 스타일 */
 .score-container {
   position: fixed;
   top: 10px;
   right: 20px;
   font-size: 18px;
   font-weight: bold;
-}
-.image-container img {
-  width: 300px;
-  height: 300px;
-  border-radius: 8px;
-  margin-top: 20px;
-  background-color: white;
 }
 .key-list-container {
   margin-top: 40px;
@@ -316,7 +373,7 @@ body {
   cursor: not-allowed;
 }
 .rank-button {
-  background-color: #3498db; /* Change button color to desired blue */
+  background-color: #3498db;
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
@@ -327,7 +384,7 @@ body {
   transition: background-color 0.2s;
 }
 .rank-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+  background-color: #2980b9;
 }
 .start-button {
   background-color: #ffcc00;
@@ -341,33 +398,72 @@ body {
   cursor: pointer;
 }
 
-.firework-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.animated-icons {
+  position: relative;
   pointer-events: none;
-  z-index: 1000;
 }
 
-.firework {
+.animated-icons img {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #ffcc00;
-  border-radius: 50%;
-  animation: explode 0.8s ease-out forwards;
-  opacity: 0;
+  width: 50px;
+  height: 50px;
+  animation: none;
+  z-index: 2;
 }
 
-@keyframes explode {
+.shower,
+.bubble {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  animation: none;
+  z-index: 2;
+}
+
+.animate .shower {
+  animation: showerMove 2s infinite;
+}
+
+.animate .bubble {
+  animation: bubbleMove 2s infinite;
+}
+
+@keyframes showerMove {
   0% {
-    transform: scale(1);
-    opacity: 1;
+    top: 0;
+    left: 0;
+  }
+  50% {
+    top: 50%;
+    left: 50%;
   }
   100% {
-    transform: translate(var(--x), var(--y)) scale(0.5);
-    opacity: 0;
+    top: 100%;
+    left: 100%;
   }
+}
+
+@keyframes bubbleMove {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  50% {
+    top: 100%;
+    left: 100%;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
+
+.dog-image {
+  width: 300px;
+  height: 300px;
+  z-index: 1;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: white;
 }
 </style>
