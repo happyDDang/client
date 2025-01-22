@@ -11,9 +11,11 @@
           <!-- <font-awesome-icon class="shake-icon" icon="fa-solid fas fa-clock" /> -->
           <div class="shake-icon">
             <img :src="Clock" alt="Clock Image" class="clock" />
-            <p class="timer-label">Time!</p>
+            <div class="timer-label">Time!</div>
           </div>
-          <div class="timer-bar" :style="{ width: timerWidth + '%' }"></div>
+          <div class="timer-bar-box">
+            <div class="timer-bar" :style="{ width: timerWidth + '%' }"></div>
+          </div>
         </div>
         <div class="score-container">Score: {{ score }}</div>
         <div class="image-container">
@@ -102,7 +104,7 @@ const currentDogStep = ref(0);
 const keyList = ref([]);
 const errorMessage = ref('');
 const showPopup = ref(true);
-const timerWidth = ref(100);
+const timerWidth = ref(80);
 const score = ref(0);
 const nickname = ref('');
 const currentKeyIndex = ref(0);
@@ -145,15 +147,15 @@ const startGame = () => {
 };
 
 const startTimer = () => {
-  timerWidth.value = 100;
+  timerWidth.value = 80;
   const timerInterval = setInterval(() => {
     if (timerWidth.value > 0) {
-      timerWidth.value -= 5;
+      timerWidth.value -= 4;
     } else {
       window.removeEventListener('keydown', handleKeyPress);
       clearInterval(timerInterval);
     }
-  }, 10000);
+  }, 2000);
 };
 
 const generateRandomKeys = () => {
@@ -261,10 +263,11 @@ body {
   position: fixed;
   top: 10px;
   left: 10px;
-  width: 150px;
+  width: 400px;
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
 }
 
 .timer-label {
@@ -274,6 +277,12 @@ body {
   color: white;
 }
 
+.timer-bar-box {
+  flex: 1;
+  height: 20px;
+  padding: 5px;
+  border: 1px white solid;
+}
 .timer-bar {
   height: 20px;
   background: #4caf50;
@@ -288,12 +297,11 @@ body {
 
 /* 시계 아이콘 */
 .shake-icon {
+  width: 80px;
   font-size: 24px;
   color: white;
   animation: shake 0.5s infinite; /* 떨림 애니메이션 */
   display: block;
-  margin: 0 auto 5px auto; /* 중앙 정렬 */
-  height: 24px;
 }
 
 .shaking {
