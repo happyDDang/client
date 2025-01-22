@@ -19,17 +19,16 @@
         <div class="image-container">
           <div>
             <div class="animated-icons">
-              <div class="shake-icon">
-                <img
-                  :src="Bubble"
-                  alt="Bubble"
-                  :style="{
-                    top: bubblePostion.top + 'px',
-                    left: bubblePostion.left + 'px',
-                  }"
-                />
+              <div
+                class="resize-icon"
+                :style="{
+                  top: bubblePostion.top + 'px',
+                  left: bubblePostion.left + 'px',
+                }"
+              >
+                <img class="bubble" :src="Bubble" alt="Bubble" />
               </div>
-              <div class="shake-icon">
+              <div class="swing-icon">
                 <img
                   :src="ShowerHead"
                   alt="Shower Head"
@@ -40,7 +39,6 @@
                 />
               </div>
             </div>
-
             <img :src="currentImage" alt="Random Image" class="dog-image" />
           </div>
         </div>
@@ -307,6 +305,47 @@ body {
   }
 }
 
+.swing-icon {
+  transform-origin: bottom;
+  animation: swing 2s infinite alternate ease-in-out;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(30deg);
+  }
+}
+
+.bubble {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.resize-icon {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  animation: resize 2s infinite alternate ease-in-out;
+  transform-origin: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+@keyframes resize {
+  0% {
+    transform: scale(1); /* 위치 고정 */
+  }
+  100% {
+    transform: scale(1.5); /* 위치 고정 */
+  }
+}
+
 /* 나머지 스타일 */
 .score-container {
   position: fixed;
@@ -405,18 +444,16 @@ body {
 
 .animated-icons img {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   animation: none;
   z-index: 2;
 }
 
-.shower,
-.bubble {
+.shower {
   position: absolute;
   width: 50px;
   height: 50px;
-  animation: none;
   z-index: 2;
 }
 
