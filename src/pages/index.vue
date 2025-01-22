@@ -58,9 +58,16 @@ import Dog1_5 from '../assets/dog1_5.png';
 
 const router = useRouter();
 
-const images = [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5];
+const images = [
+  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+];
 
 const currentImageIndex = ref(0);
+const currentDogStep = ref(0);
 const keyList = ref([]);
 const errorMessage = ref('');
 const showPopup = ref(true);
@@ -69,7 +76,9 @@ const score = ref(0);
 const nickname = ref('');
 const currentKeyIndex = ref(0);
 
-const currentImage = computed(() => images[currentImageIndex.value]);
+const currentImage = computed(
+  () => images[currentImageIndex.value][currentDogStep.value]
+);
 
 const formattedKeyList = computed(() => {
   return keyList.value
@@ -136,10 +145,17 @@ const handleKeyPress = (event) => {
     currentKeyIndex.value++;
     createFirework(); // 폭죽 효과 실행
 
+    // 강아지 단계 증가
+    if (currentKeyIndex.value % 2 === 0) {
+      currentDogStep.value += 1;
+    }
+
+    // 다음 강아지로 넘어가기
     if (currentKeyIndex.value >= keyList.value.length) {
       score.value += 20;
       currentKeyIndex.value = 0;
-      currentImageIndex.value = (currentImageIndex.value + 1) % images.length;
+      currentImageIndex.value = Math.floor(Math.random() * images.length);
+      currentDogStep.value = 0;
       generateRandomKeys();
     }
   } else {
@@ -238,10 +254,9 @@ body {
 .image-container img {
   width: 300px;
   height: 300px;
-  border: 2px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
+  background-color: white;
 }
 .key-list-container {
   margin-top: 40px;
