@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="key-list-container">
-          <div class="key-list-box">
+          <div class="key-list-box" :class="{ shaking: isWrongKey }">
             <p class="key-list-label">아이 꺠끗해!</p>
             <p class="keys">{{ formattedKeyList }}</p>
           </div>
@@ -106,6 +106,7 @@ const timerWidth = ref(100);
 const score = ref(0);
 const nickname = ref('');
 const currentKeyIndex = ref(0);
+const isWrongKey = ref(false);
 
 const bubblePostion = ref({ top: 270, left: 30 });
 const showerPostion = ref({ top: 0, left: 270 });
@@ -208,11 +209,16 @@ const handleKeyPress = (event) => {
     }
   } else {
     errorMessage.value = 'Incorrect key! Restarting...';
-    currentKeyIndex.value = 0;
+    currentDogStep.value = 0;
+
+    isWrongKey.value = true;
 
     setTimeout(() => {
       errorMessage.value = '';
-    }, 2000);
+      isWrongKey.value = false;
+
+      currentKeyIndex.value = 0;
+    }, 500);
   }
 };
 
@@ -288,6 +294,12 @@ body {
   display: block;
   margin: 0 auto 5px auto; /* 중앙 정렬 */
   height: 24px;
+}
+
+.shaking {
+  animation: shake 0.5s infinite;
+  display: block;
+  margin: 0 auto 5px auto; /* 중앙 정렬 */
 }
 
 @keyframes shake {
@@ -444,8 +456,8 @@ body {
 
 .animated-icons img {
   position: absolute;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   animation: none;
   z-index: 2;
 }
