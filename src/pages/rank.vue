@@ -6,39 +6,57 @@
         v-for="(player, index) in rankings"
         :key="index"
         class="rank-item"
-        :class="{ highlight: player.name === myRank.name }"
+        :class="{ highlight: player.nickname === myRank.nickname }"
       >
-        <p>{{ index + 1 }}. {{ player.name }} - {{ player.score }} pts</p>
+        <p>{{ index + 1 }}. {{ player.nickname }} - {{ player.score }} pts</p>
       </div>
     </div>
     <div class="my-rank">
       <h2>Your Rank</h2>
-      <p>{{ myRank.name }} - {{ myRank.score }} pts</p>
+      <p>{{ myRank.nickname }} - {{ myRank.score }} pts</p>
     </div>
     <button class="back-button" @click="backToGame">Back to Game</button>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+
+// import { fetchRankings } from '../api/api.js';
 
 const router = useRouter();
 
-// Example ranking data
-const rankings = [
-  { name: 'Alice', score: 100 },
-  { name: 'Bob', score: 80 },
-  { name: 'Charlie', score: 60 },
-  { name: 'Dave', score: 40 },
-  { name: 'Eve', score: 20 },
-];
+const rankings = ref([
+  { nickname: 'Alice', score: 100 },
+  { nickname: 'Bob', score: 80 },
+  { nickname: 'Charlie', score: 60 },
+  { nickname: 'Dave', score: 40 },
+  { nickname: 'Eve', score: 20 },
+]);
 
-// Example user rank (this would typically be dynamic)
-const myRank = { name: 'You', score: 50 };
+const myRank = ref({ name: 'You', score: 50 });
+
+/**
+ * 
+ const loadRankings = async () => {
+  try {
+    const response = await fetchRankings(12, 5);
+    rankings.value = response.data.value.top_rank || [];
+    myRank.value = response.data.value.my_rank || {};
+  } catch (error) {
+    console.error('Failed to load rankings:', error);
+  }
+};
+*/
 
 const backToGame = () => {
   router.push('/'); // Navigate back to the game start screen
 };
+
+onMounted(() => {
+  // loadRankings();
+});
 </script>
 
 <script>

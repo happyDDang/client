@@ -88,6 +88,8 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+// import { checkNickname } from '../api/api.js';
+
 // Import images directly
 import Dog1_1 from '../assets/dog1_1.png';
 import Dog1_2 from '../assets/dog1_2.png';
@@ -238,10 +240,25 @@ const handleKeyPress = (event) => {
   }
 };
 
-const goToRank = () => {
+const goToRank = async () => {
   if (nickname.value.trim()) {
     router.push('/rank');
   }
+
+  /**
+   * API 연동 후 주석 제거 예정
+  try {
+    const response = await checkNickname(nickname.value);
+    const isDuplicated = response.data.value.duplicated;
+    if (!isDuplicated && nickname.value.trim()) {
+      router.push('/rank');
+    } else {
+      alert('닉네임 중복입니다. 다른 닉네임을 사용해주세요.');
+    }
+  } catch (error) {
+    console.error('Failed to check nickname duplication:', error);
+  }
+  */
 };
 
 onMounted(() => {
