@@ -2,7 +2,7 @@
   <div class="app">
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
-        <button class="start-button" @click="startGame">GAME START</button>
+        <button class="start-button" @click="startGame">GAME START!</button>
       </div>
     </div>
     <div v-else>
@@ -22,10 +22,19 @@
           <div>
             <div class="animated-icons">
               <div
-                class="resize-icon"
+                class="resize-icon-big"
                 :style="{
-                  top: bubblePostion.top + 'px',
-                  left: bubblePostion.left + 'px',
+                  top: bubblePostion1.top + 'px',
+                  left: bubblePostion1.left + 'px',
+                }"
+              >
+                <img class="bubble" :src="Bubble" alt="Bubble" />
+              </div>
+              <div
+                class="resize-icon-small"
+                :style="{
+                  top: bubblePostion2.top + 'px',
+                  left: bubblePostion2.left + 'px',
                 }"
               >
                 <img class="bubble" :src="Bubble" alt="Bubble" />
@@ -110,8 +119,9 @@ const nickname = ref('');
 const currentKeyIndex = ref(0);
 const isWrongKey = ref(false);
 
-const bubblePostion = ref({ top: 270, left: 30 });
-const showerPostion = ref({ top: 0, left: 270 });
+const bubblePostion1 = ref({ top: 200, left: 30 });
+const bubblePostion2 = ref({ top: 50, left: 200 });
+const showerPostion = ref({ top: 20, left: 30 });
 
 const currentImage = computed(
   () => images[currentImageIndex.value][currentDogStep.value]
@@ -187,12 +197,16 @@ const handleKeyPress = (event) => {
     // void animatedIcons.offsetWidth; // 리플로우 트릭
     // animatedIcons.classList.add('animate');
 
-    bubblePostion.value = {
+    bubblePostion1.value = {
+      top: Math.floor(Math.random() * 200),
+      left: Math.floor(Math.random() * 200),
+    };
+    bubblePostion2.value = {
       top: Math.floor(Math.random() * 300),
       left: Math.floor(Math.random() * 300),
     };
     showerPostion.value = {
-      top: Math.floor(Math.random() * 300),
+      top: Math.floor(Math.random() * 100),
       left: Math.floor(Math.random() * 300),
     };
 
@@ -245,7 +259,7 @@ export default {
 body {
   margin: 0;
   padding: 0;
-  background: url('@/assets/game_background.png') no-repeat center center fixed;
+  background: url('@/assets/game_background.png') no-repeat center center;
   background-size: cover;
   overflow: hidden;
 }
@@ -345,11 +359,22 @@ body {
   object-fit: cover; /* 이미지 비율 유지 */
 }
 
-.resize-icon {
-  width: 150px;
-  height: 150px;
+.resize-icon-big {
+  width: 170px;
+  height: 170px;
   position: absolute;
-  animation: resize 2s infinite alternate ease-in-out;
+  animation: resize-big 1.5s infinite alternate ease-in-out;
+  transform-origin: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.resize-icon-small {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  animation: resize-small 3s infinite alternate ease-in-out;
   transform-origin: center;
   display: flex;
   justify-content: center;
@@ -357,12 +382,20 @@ body {
   z-index: 2;
 }
 
-@keyframes resize {
+@keyframes resize-big {
   0% {
     transform: scale(1); /* 위치 고정 */
   }
   100% {
     transform: scale(1.5); /* 위치 고정 */
+  }
+}
+@keyframes resize-small {
+  0% {
+    transform: scale(1); /* 위치 고정 */
+  }
+  100% {
+    transform: scale(0.7); /* 위치 고정 */
   }
 }
 
@@ -521,6 +554,5 @@ body {
   z-index: 1;
   border-radius: 8px;
   margin-top: 20px;
-  background-color: white;
 }
 </style>
