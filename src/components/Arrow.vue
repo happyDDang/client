@@ -1,0 +1,70 @@
+<script>
+export default {
+  name: 'ArrowSvg',
+};
+</script>
+
+<template>
+  <svg
+    v-if="direction === 'space'"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 50 50"
+    fill="none"
+    stroke="orange"
+    stroke-width="4"
+    class="circle-icon"
+  >
+    <!-- 동그라미 -->
+    <circle cx="20" cy="20" r="15" fill="white" stroke="orange" />
+  </svg>
+  <svg
+    v-else
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 50 50"
+    fill="red"
+    stroke="orange"
+    stroke-width="4"
+    class="arrow-icon"
+    :style="{ transform: rotation }"
+  >
+    <!-- 화살표 -->
+    <polygon
+      points="25,5 40,20 30,20 30,35 20,35 20,20 10,20"
+      fill="white"
+      stroke="orange"
+      stroke-width="4"
+    />
+  </svg>
+</template>
+
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  direction: {
+    type: String,
+    default: 'up', // 기본 방향은 위쪽
+    validator: (value) =>
+      ['up', 'down', 'left', 'right', 'space'].includes(value), // space 추가
+  },
+});
+
+const rotationMap = {
+  up: 'rotate(0deg)', // 기본 회전 (위쪽)
+  right: 'rotate(90deg)', // 오른쪽
+  down: 'rotate(180deg)', // 아래쪽
+  left: 'rotate(-90deg)', // 왼쪽
+};
+
+const rotation = rotationMap[props.direction] || 'rotate(0deg)'; // 기본 회전값
+</script>
+
+<style scoped>
+.arrow-icon,
+.circle-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* 부드러운 애니메이션 효과 */
+}
+</style>

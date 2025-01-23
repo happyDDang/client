@@ -56,7 +56,13 @@
         <div class="key-list-container">
           <div class="key-list-box" :class="{ shaking: isWrongKey }">
             <p class="key-list-label">아이 꺠끗해!</p>
-            <p class="keys">{{ formattedKeyList }}</p>
+            <p class="keys">
+              <ArrowSvg
+                v-for="(key, index) in formattedKeyDirection"
+                :key="index"
+                :direction="key"
+              />
+            </p>
           </div>
         </div>
         <div v-if="errorMessage" class="error-message">
@@ -88,6 +94,7 @@ import './index.css';
 
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import ArrowSvg from '../components/Arrow.vue';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import audioPlayer from '../composable/audioPlayer.js';
@@ -135,25 +142,23 @@ const currentImage = computed(
   () => images[currentImageIndex.value][currentDogStep.value]
 );
 
-const formattedKeyList = computed(() => {
-  return keyList.value
-    .map((key) => {
-      switch (key) {
-        case 'ArrowUp':
-          return '⬆️';
-        case 'ArrowDown':
-          return '⬇️';
-        case 'ArrowLeft':
-          return '⬅️';
-        case 'ArrowRight':
-          return '➡️';
-        case ' ':
-          return '⭕';
-        default:
-          return key;
-      }
-    })
-    .join(', ');
+const formattedKeyDirection = computed(() => {
+  return keyList.value.map((key) => {
+    switch (key) {
+      case 'ArrowUp':
+        return 'up';
+      case 'ArrowDown':
+        return 'down';
+      case 'ArrowLeft':
+        return 'left';
+      case 'ArrowRight':
+        return 'right';
+      case ' ':
+        return 'space';
+      default:
+        return key;
+    }
+  });
 });
 
 const startGame = () => {
@@ -177,7 +182,7 @@ const startTimer = () => {
       window.removeEventListener('keydown', handleKeyPress);
       clearInterval(timerInterval);
     }
-  }, 2000);
+  }, 200000);
 };
 
 const generateRandomKeys = () => {
@@ -197,6 +202,12 @@ const generateRandomKeys = () => {
 };
 
 const handleKeyPress = (event) => {
+  console.log(
+    keyList.value,
+    currentKeyIndex.value,
+    keyList.value[currentKeyIndex.value],
+    event.key
+  );
   if (timerWidth.value <= 0) return;
 
   if (keyList.value[currentKeyIndex.value] === event.key) {
