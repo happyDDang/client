@@ -20,8 +20,12 @@
 </template>
 
 <script setup>
+import './rank.css';
+
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+
+import audioPlayer from '../composable/audioPlayer.js';
 
 // import { fetchRankings } from '../api/api.js';
 
@@ -51,6 +55,7 @@ const myRank = ref({ name: 'You', score: 50 });
 */
 
 const backToGame = () => {
+  audioPlayer.stopSound('gameOver');
   router.push('/'); // Navigate back to the game start screen
 };
 
@@ -64,52 +69,3 @@ export default {
   name: 'RankPage',
 };
 </script>
-
-<style>
-.rank-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-.rank-list {
-  margin: 20px 0;
-}
-.rank-item {
-  margin: 10px 0;
-  font-size: 18px;
-}
-.rank-item.highlight {
-  font-weight: bold;
-  color: #007bff;
-}
-.my-rank {
-  margin-top: 20px;
-  padding: 15px 20px;
-  background-color: #ffcc00;
-  color: #333;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.back-button {
-  margin-top: 20px;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-.back-button:hover {
-  background-color: #0056b3;
-}
-</style>
