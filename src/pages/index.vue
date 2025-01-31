@@ -59,8 +59,9 @@
             <p class="keys">
               <ArrowSvg
                 v-for="(key, index) in formattedKeyDirection"
-                :key="index"
+                :key="index + Math.random()"
                 :direction="key"
+                :isFilled="isFilled[index]"
               />
             </p>
           </div>
@@ -131,6 +132,7 @@ const score = ref(0);
 const nickname = ref('');
 const currentKeyIndex = ref(0);
 const isWrongKey = ref(false);
+const isFilled = ref(Array(8).fill(false));
 
 const bubblePostion1 = ref({ top: 200, left: 30 });
 const bubblePostion2 = ref({ top: 50, left: 200 });
@@ -186,6 +188,8 @@ const startTimer = () => {
 };
 
 const generateRandomKeys = () => {
+  isFilled.value = Array(8).fill(false);
+
   const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '];
   const randomKeys = [];
   while (randomKeys.length < 8) {
@@ -202,23 +206,12 @@ const generateRandomKeys = () => {
 };
 
 const handleKeyPress = (event) => {
-  console.log(
-    keyList.value,
-    currentKeyIndex.value,
-    keyList.value[currentKeyIndex.value],
-    event.key
-  );
   if (timerWidth.value <= 0) return;
 
   if (keyList.value[currentKeyIndex.value] === event.key) {
+    isFilled.value[currentKeyIndex.value] = true;
     errorMessage.value = '';
     currentKeyIndex.value++;
-
-    // 아이콘 애니메이션 재시작
-    // const animatedIcons = document.querySelector('.animated-icons');
-    // animatedIcons.classList.remove('animate');
-    // void animatedIcons.offsetWidth; // 리플로우 트릭
-    // animatedIcons.classList.add('animate');
 
     bubblePostion1.value = {
       top: Math.floor(Math.random() * 200),
@@ -253,6 +246,8 @@ const handleKeyPress = (event) => {
     currentDogStep.value = 0;
 
     isWrongKey.value = true;
+
+    isFilled.value = Array(8).fill(false);
 
     setTimeout(() => {
       errorMessage.value = '';

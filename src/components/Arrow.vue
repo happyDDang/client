@@ -11,28 +11,34 @@ export default {
     viewBox="0 0 50 50"
     fill="none"
     stroke="orange"
-    stroke-width="4"
+    stroke-width="2"
     class="circle-icon"
   >
     <!-- 동그라미 -->
-    <circle cx="20" cy="20" r="15" fill="white" stroke="orange" />
+    <circle
+      cx="20"
+      cy="20"
+      r="15"
+      :class="{ filled: isFilled }"
+      stroke="orange"
+    />
   </svg>
   <svg
     v-else
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 50 50"
-    fill="red"
     stroke="orange"
-    stroke-width="4"
+    stroke-width="2"
     class="arrow-icon"
+    fill="none"
     :style="{ transform: rotation }"
   >
     <!-- 화살표 -->
     <polygon
       points="25,5 40,20 30,20 30,35 20,35 20,20 10,20"
-      fill="white"
+      :class="{ filled: isFilled }"
       stroke="orange"
-      stroke-width="4"
+      stroke-width="2"
     />
   </svg>
 </template>
@@ -41,6 +47,10 @@ export default {
 import { defineProps } from 'vue';
 
 const props = defineProps({
+  isFilled: {
+    type: Boolean,
+    default: false,
+  },
   direction: {
     type: String,
     default: 'up', // 기본 방향은 위쪽
@@ -66,5 +76,8 @@ const rotation = rotationMap[props.direction] || 'rotate(0deg)'; // 기본 회�
   height: 50px;
   cursor: pointer;
   transition: transform 0.3s ease; /* 부드러운 애니메이션 효과 */
+}
+.filled {
+  fill: orange; /* 색상 변경 */
 }
 </style>
