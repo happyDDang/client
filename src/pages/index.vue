@@ -1,8 +1,9 @@
 <template>
   <div class="app">
     <div v-if="showPopup" class="popup-overlay">
+      <img class="logo" :src="Logo" alt="logo" />
       <div class="popup">
-        <button class="start-button" @click="startGame">GAME START!</button>
+        <a href="#" @click="startGame" class="btn-3d yellow">GAME START!</a>
       </div>
     </div>
     <div v-else>
@@ -111,6 +112,7 @@ import Dog1_5 from '../assets/dog1_5.png';
 import Clock from '../assets/clock.png';
 import ShowerHead from '../assets/shower_head.png';
 import Bubble from '../assets/bubble.png';
+import Logo from '../assets/logo.png';
 
 const router = useRouter();
 
