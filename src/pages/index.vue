@@ -20,7 +20,10 @@
             </div>
           </div>
         </div>
-        <div class="score-container">Score: {{ score }}</div>
+        <div class="score-container">
+          <img :src="ScoreDog" class="score-dog" />
+          <div>{{ score }}</div>
+        </div>
         <div class="image-container">
           <div>
             <div class="animated-icons">
@@ -129,6 +132,7 @@ import Clock from '../assets/clock.png';
 import ShowerHead from '../assets/shower_head.png';
 import Bubble from '../assets/bubble.png';
 import Logo from '../assets/logo.png';
+import ScoreDog from '../assets/score_dog.png';
 
 const router = useRouter();
 

@@ -150,10 +150,16 @@ body {
 /* 나머지 스타일 */
 .score-container {
   position: fixed;
-  top: 10px;
+  top: 30px;
   right: 20px;
   font-size: 18px;
   font-weight: bold;
+  color: #F2484C;
+  display:flex;
+  flex-direction: column;
+}
+.score-dog{
+  width: 70px;
 }
 .key-list-container {
   margin-top: 40px;
