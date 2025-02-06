@@ -23,13 +23,10 @@
 import './rank.css';
 
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 
 import audioPlayer from '../composable/audioPlayer.js';
 
-// import { fetchRankings } from '../api/api.js';
-
-const router = useRouter();
+import { fetchRankings } from '../api/api.js';
 
 const rankings = ref([
   { nickname: 'Alice', score: 100 },
@@ -41,26 +38,26 @@ const rankings = ref([
 
 const myRank = ref({ name: 'You', score: 50 });
 
-/**
- * 
- const loadRankings = async () => {
+const loadRankings = async () => {
   try {
-    const response = await fetchRankings(12, 5);
+    /**
+     * @fix params (memberNo, 5) 으로 요청.
+     */
+    const response = await fetchRankings(1, 5);
     rankings.value = response.data.value.top_rank || [];
     myRank.value = response.data.value.my_rank || {};
   } catch (error) {
     console.error('Failed to load rankings:', error);
   }
 };
-*/
 
 const backToGame = () => {
   audioPlayer.stopSound('gameOver');
-  router.push('/'); // Navigate back to the game start screen
+  window.location.href = window.location.origin;
 };
 
 onMounted(() => {
-  // loadRankings();
+  loadRankings();
 });
 </script>
 

@@ -82,7 +82,6 @@
               class="nickname-input"
               placeholder="Enter your nickname"
             />
-            <button class="start-button" @click="startGame">RESTART</button>
             <button class="rank-button" :disabled="!nickname" @click="goToRank">
               Go to Rankings
             </button>
@@ -103,7 +102,7 @@ import ArrowSvg from '../components/Arrow.vue';
 
 import audioPlayer from '../composable/audioPlayer.js';
 
-// import { checkNickname } from '../api/api.js';
+import { checkNickname } from '../api/api.js';
 
 // Import images directly
 import Dog1_1 from '../assets/dog1_1.png';
@@ -196,14 +195,14 @@ const startTimer = () => {
   timerWidth.value = 80;
   const timerInterval = setInterval(() => {
     if (timerWidth.value > 0) {
-      timerWidth.value -= 4;
+      timerWidth.value -= 40;
     } else {
       audioPlayer.stopSound('gameStart');
       audioPlayer.playSound('gameOver');
       window.removeEventListener('keydown', handleKeyPress);
       clearInterval(timerInterval);
     }
-  }, 200000);
+  }, 2000);
 };
 
 const generateRandomKeys = () => {
@@ -282,8 +281,6 @@ const goToRank = async () => {
     router.push('/rank');
   }
 
-  /**
-   * API 연동 후 주석 제거 예정
   try {
     const response = await checkNickname(nickname.value);
     const isDuplicated = response.data.value.duplicated;
@@ -295,7 +292,6 @@ const goToRank = async () => {
   } catch (error) {
     console.error('Failed to check nickname duplication:', error);
   }
-  */
 };
 
 onMounted(() => {
