@@ -295,15 +295,21 @@ body {
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
 }
+.logo-box {
+  position: relative;
+}
 .popup {
   background: white;
   padding: 5px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: fit-content;
+  width: 275px;
   margin: auto;
   position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .nickname-input {
   margin-bottom: 20px;

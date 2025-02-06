@@ -111,6 +111,21 @@ import Dog1_2 from '../assets/dog1_2.png';
 import Dog1_3 from '../assets/dog1_3.png';
 import Dog1_4 from '../assets/dog1_4.png';
 import Dog1_5 from '../assets/dog1_5.png';
+// import Dog2_1 from '../assets/dog2_1.png';
+// import Dog2_2 from '../assets/dog2_2.png';
+// import Dog2_3 from '../assets/dog2_3.png';
+// import Dog2_4 from '../assets/dog2_4.png';
+// import Dog2_5 from '../assets/dog2_5.png';
+import Dog3_1 from '../assets/dog3_1.png';
+import Dog3_2 from '../assets/dog3_2.png';
+import Dog3_3 from '../assets/dog3_3.png';
+import Dog3_4 from '../assets/dog3_4.png';
+import Dog3_5 from '../assets/dog3_5.png';
+import Dog4_1 from '../assets/dog4_1.png';
+import Dog4_2 from '../assets/dog4_2.png';
+import Dog4_3 from '../assets/dog4_3.png';
+import Dog4_4 from '../assets/dog4_4.png';
+import Dog4_5 from '../assets/dog4_5.png';
 import Clock from '../assets/clock.png';
 import ShowerHead from '../assets/shower_head.png';
 import Bubble from '../assets/bubble.png';
@@ -121,8 +136,8 @@ const router = useRouter();
 const images = [
   [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
   [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
-  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
-  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog3_1, Dog3_2, Dog3_3, Dog3_4, Dog3_5],
+  [Dog4_1, Dog4_2, Dog4_3, Dog4_4, Dog4_5],
   [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
 ];
 
