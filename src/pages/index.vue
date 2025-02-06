@@ -1,9 +1,11 @@
 <template>
   <div class="app">
     <div v-if="showPopup" class="popup-overlay">
-      <img class="logo" :src="Logo" alt="logo" />
-      <div class="popup">
-        <a href="#" @click="startGame" class="btn-3d yellow">GAME START!</a>
+      <div class="logo-box">
+        <img class="logo" :src="Logo" alt="logo" />
+        <div class="popup">
+          <a href="#" @click="startGame" class="btn-3d yellow">GAME START!</a>
+        </div>
       </div>
     </div>
     <div v-else>
