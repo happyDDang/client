@@ -20,30 +20,35 @@ body {
   top: 10px;
   left: 10px;
   width: 400px;
+}
+
+.timer-box{
   text-align: center;
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.timer-label {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: white;
+  position: relative;
 }
 
 .timer-bar-box {
   flex: 1;
+  width: 300px;
   height: 20px;
   padding: 5px;
-  border: 1px white solid;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 14.5%;
+  top: 32%;
+  z-index: -1;
 }
+
 .timer-bar {
   height: 20px;
-  background: #4caf50;
-  border-radius: 10px;
+  background: #F2484C;
   transition: width 1s linear;
+  border: 2px #082D48 solid;
+  border-radius: 5px;
 }
 
 .clock {
@@ -51,12 +56,13 @@ body {
   height: 70px;
 }
 
-/* 시계 아이콘 */
 .shake-icon {
-  width: 80px;
-  font-size: 24px;
   color: white;
-  animation: shake 0.5s infinite; /* 떨림 애니메이션 */
+  animation: shake 0.5s infinite; /* 떨림 애니메이션 */  
+}
+
+.clock-icon{
+  width: 80px;
   display: block;
 }
 
@@ -189,34 +195,17 @@ body {
 }
 /* 3D Button */
 .btn-3d {
-  position: relative;
-  display: inline-block;
-  font-size: 22px;
-  padding: 20px 60px;
-  color: white;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  text-align: center;
-  transition: top 0.01s linear;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-}
-.btn-3d.red:hover {
-  background-color: #e74c3c;
-}
-.btn-3d.blue:hover {
-  background-color: #699dd1;
-}
-.btn-3d.green:hover {
-  background-color: #80c49d;
-}
-.btn-3d.purple:hover {
-  background-color: #d19ecb;
-}
-.btn-3d.yellow:hover {
-  background-color: #54a7cc;
-}
-.btn-3d.cyan:hover {
-  background-color: #82d1e3;
+	position: relative;
+	display: inline-block;
+	font-size: 22px;
+	padding: 20px 60px;
+	color: white;
+	margin-bottom: 10px;
+	border-radius: 6px;
+	text-align: center;
+	transition: top .01s linear;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  text-decoration: none;
 }
 
 .btn-3d:active {

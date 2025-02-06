@@ -10,14 +10,14 @@
     </div>
     <div v-else>
       <div v-if="timerWidth > 0">
-        <div class="timer-container">
-          <!-- <font-awesome-icon class="shake-icon" icon="fa-solid fas fa-clock" /> -->
-          <div class="shake-icon">
-            <img :src="Clock" alt="Clock Image" class="clock" />
-            <div class="timer-label">Time!</div>
-          </div>
-          <div class="timer-bar-box">
-            <div class="timer-bar" :style="{ width: timerWidth + '%' }"></div>
+        <div class="timer-container" :class="{ 'shake-icon': is10SecondLeft }">
+          <div class="timer-box">
+            <div class="clock-icon">
+              <img :src="Clock" alt="Clock Image" class="clock" />
+            </div>
+            <div class="timer-bar-box">
+              <div class="timer-bar" :style="{ width: timerWidth + '%' }"></div>
+            </div>
           </div>
         </div>
         <div class="score-container">Score: {{ score }}</div>
@@ -145,12 +145,13 @@ const currentDogStep = ref(0);
 const keyList = ref([]);
 const errorMessage = ref('');
 const showPopup = ref(true);
-const timerWidth = ref(80);
+const timerWidth = ref(200);
 const score = ref(0);
 const nickname = ref('');
 const currentKeyIndex = ref(0);
 const isWrongKey = ref(false);
 const isFilled = ref(Array(8).fill(false));
+const is10SecondLeft = ref(false);
 
 const bubblePostion1 = ref({ top: 200, left: 30 });
 const bubblePostion2 = ref({ top: 50, left: 200 });
@@ -192,15 +193,19 @@ const startGame = () => {
 };
 
 const startTimer = () => {
-  timerWidth.value = 80;
+  timerWidth.value = 100;
   const timerInterval = setInterval(() => {
     if (timerWidth.value > 0) {
-      timerWidth.value -= 40;
+      timerWidth.value -= 5;
     } else {
       audioPlayer.stopSound('gameStart');
       audioPlayer.playSound('gameOver');
       window.removeEventListener('keydown', handleKeyPress);
       clearInterval(timerInterval);
+    }
+
+    if (timerWidth.value < 50) {
+      is10SecondLeft.value = true;
     }
   }, 2000);
 };
