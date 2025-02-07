@@ -89,7 +89,7 @@ body {
 
 .swing-icon {
   transform-origin: bottom;
-  animation: swing 2s infinite alternate ease-in-out;
+  animation: swing 0.7s infinite alternate ease-in-out;
   width: 100px;
 }
 
@@ -98,7 +98,7 @@ body {
     transform: rotate(10deg);
   }
   100% {
-    transform: rotate(30deg);
+    transform: rotate(20deg);
   }
 }
 
@@ -112,7 +112,7 @@ body {
   width: 130px;
   height: 130px;
   position: absolute;
-  animation: resize-big 1.5s infinite alternate ease-in-out;
+  animation: resize-big 1s infinite alternate ease-in-out;
   transform-origin: center;
   display: flex;
   justify-content: center;
@@ -123,7 +123,7 @@ body {
   width: 130px;
   height: 130px;
   position: absolute;
-  animation: resize-small 3s infinite alternate ease-in-out;
+  animation: resize-small 1s infinite alternate ease-in-out;
   transform-origin: center;
   display: flex;
   justify-content: center;

@@ -171,9 +171,26 @@ const isWrongKey = ref(false);
 const isFilled = ref(Array(8).fill(false));
 const is10SecondLeft = ref(false);
 
-const bubblePostion1 = ref({ top: 200, left: 30 });
-const bubblePostion2 = ref({ top: 50, left: 200 });
-const showerPostion = ref({ top: 20, left: 30 });
+const animationPosition = ref([
+  [
+    { top: 140, left: 30 },
+    { top: 200, left: 150 },
+    { top: -40, left: 200 },
+  ],
+  [
+    { top: 200, left: 30 },
+    { top: 100, left: 150 },
+    { top: -40, left: 200 },
+  ],
+  [
+    { top: 200, left: 150 },
+    { top: 100, left: 30 },
+    { top: -40, left: 200 },
+  ],
+]);
+const bubblePostion1 = ref({ top: 200, left: 30 }); // big
+const bubblePostion2 = ref({ top: 100, left: 150 }); // small
+const showerPostion = ref({ top: -40, left: 200 });
 
 const wrongInputSound = () => audioPlayer.playSound('wrongInput');
 
@@ -254,17 +271,19 @@ const handleKeyPress = (event) => {
     errorMessage.value = '';
     currentKeyIndex.value++;
 
+    let randomPosition = Math.floor(Math.random() * 3);
+
     bubblePostion1.value = {
-      top: Math.floor(Math.random() * 200),
-      left: Math.floor(Math.random() * 200),
+      top: animationPosition.value[randomPosition][0].top,
+      left: animationPosition.value[randomPosition][0].left,
     };
     bubblePostion2.value = {
-      top: Math.floor(Math.random() * 300),
-      left: Math.floor(Math.random() * 300),
+      top: animationPosition.value[randomPosition][1].top,
+      left: animationPosition.value[randomPosition][1].left,
     };
     showerPostion.value = {
-      top: Math.floor(Math.random() * 100),
-      left: Math.floor(Math.random() * 300),
+      top: animationPosition.value[randomPosition][2].top,
+      left: animationPosition.value[randomPosition][2].left,
     };
 
     // 강아지 단계 증가
