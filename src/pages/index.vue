@@ -63,6 +63,9 @@
           </div>
         </div>
         <div class="key-list-container">
+          <div v-if="errorMessage" class="error-message">
+            <p>{{ errorMessage }}</p>
+          </div>
           <div class="key-list-box" :class="{ shaking: isWrongKey }">
             <p class="keys">
               <ArrowSvg
@@ -75,13 +78,10 @@
             </p>
           </div>
         </div>
-        <div v-if="errorMessage" class="error-message">
-          <p>{{ errorMessage }}</p>
-        </div>
       </div>
       <div v-else>
         <div class="popup-overlay">
-          <div class="popup">
+          <div class="popup2">
             <input
               type="text"
               v-model="nickname"
@@ -277,7 +277,7 @@ const handleKeyPress = (event) => {
     }
   } else {
     wrongInputSound();
-    errorMessage.value = 'Incorrect key! Restarting...';
+    errorMessage.value = 'Retry!';
     currentDogStep.value = 0;
 
     isWrongKey.value = true;
