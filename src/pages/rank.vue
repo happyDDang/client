@@ -8,7 +8,7 @@
     </div>
     <div class="my-rank">
       <h2>내 등수: {{ myRank.rank }}등</h2>
-      <p>{{ myRank.nickname }} - {{ myRank.score }} pts</p>
+      <p>{{ myRank.nickname }}: {{ myRank.score }} pts</p>
     </div>
     <button class="back-button" @click="backToGame">Back to Game</button>
   </div>
