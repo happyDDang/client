@@ -2,17 +2,12 @@
   <div class="rank-container">
     <h1>Ranking</h1>
     <div class="rank-list">
-      <div
-        v-for="(player, index) in rankings"
-        :key="index"
-        class="rank-item"
-        :class="{ highlight: player.nickname === myRank.nickname }"
-      >
-        <p>{{ index + 1 }}. {{ player.nickname }} - {{ player.score }} pts</p>
+      <div v-for="(player, index) in rankings" :key="index" class="rank-item">
+        <p>{{ index + 1 }}등 {{ player.nickname }} - {{ player.score }} pts</p>
       </div>
     </div>
     <div class="my-rank">
-      <h2>Your Rank</h2>
+      <h2>내 등수: {{ myRank.rank }}등</h2>
       <p>{{ myRank.nickname }} - {{ myRank.score }} pts</p>
     </div>
     <button class="back-button" @click="backToGame">Back to Game</button>
@@ -48,10 +43,8 @@ const loadRankings = async () => {
 
     const response = await fetchRankings(memberNo, 5);
 
-    console.log('rank 응답', response.data);
-
-    rankings.value = response.data.value.top_rank || [];
-    myRank.value = response.data.value.my_rank || {};
+    rankings.value = response.value.top_rank || [];
+    myRank.value = response.value.my_rank || {};
   } catch (error) {
     console.error('Failed to load rankings:', error);
   }
