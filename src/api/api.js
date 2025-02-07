@@ -1,4 +1,4 @@
-const BASE_URL = 'http://52.78.219.178:5000/'; // API 기본 URL (필요 시 변경)
+const BASE_URL = 'https://52.78.219.178:5000/'; // API 기본 URL (필요 시 변경)
 
 const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const config = {

@@ -15,6 +15,7 @@ class AudioPlayer {
     this.sounds.dogBark.volume = 1.0;
     this.sounds.wrongInput.volume = 1.0;
     this.sounds.gameStart.volume = 0.15;
+    this.sounds.gameOver.volume = 0.7;
     this.sounds.gameStart.loop = true;
   }
 
