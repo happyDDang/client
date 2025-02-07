@@ -64,9 +64,9 @@
         </div>
         <div class="key-list-container">
           <div class="key-list-box" :class="{ shaking: isWrongKey }">
-            <p class="key-list-label">아이 꺠끗해!</p>
             <p class="keys">
               <ArrowSvg
+                class="key"
                 v-for="(key, index) in formattedKeyDirection"
                 :key="index + Math.random()"
                 :direction="key"

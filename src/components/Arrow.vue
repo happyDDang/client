@@ -10,7 +10,7 @@ export default {
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 50 50"
     fill="none"
-    stroke="orange"
+    stroke="#54a7cc"
     stroke-width="2"
     class="circle-icon"
   >
@@ -20,14 +20,14 @@ export default {
       cy="20"
       r="15"
       :class="{ filled: isFilled }"
-      stroke="orange"
+      stroke="#54a7cc"
     />
   </svg>
   <svg
     v-else
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 50 50"
-    stroke="orange"
+    stroke="#54a7cc"
     stroke-width="2"
     class="arrow-icon"
     fill="none"
@@ -37,7 +37,7 @@ export default {
     <polygon
       points="25,5 40,20 30,20 30,35 20,35 20,20 10,20"
       :class="{ filled: isFilled }"
-      stroke="orange"
+      stroke="#54a7cc"
       stroke-width="2"
     />
   </svg>
@@ -72,12 +72,12 @@ const rotation = rotationMap[props.direction] || 'rotate(0deg)'; // 기본 회�
 <style scoped>
 .arrow-icon,
 .circle-icon {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   transition: transform 0.3s ease; /* 부드러운 애니메이션 효과 */
 }
 .filled {
-  fill: orange; /* 색상 변경 */
+  fill: #54a7cc; /* 색상 변경 */
 }
 </style>
