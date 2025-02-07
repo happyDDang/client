@@ -9,7 +9,7 @@
 }
 .rank-box {
   background: palevioletred;
-  width: 90%;
+  width: 40%;
   height: 80%;
   font-size: 35px;
   display: flex;
@@ -65,6 +65,7 @@
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .my-rank {
