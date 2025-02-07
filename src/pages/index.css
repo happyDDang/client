@@ -179,10 +179,11 @@ body {
   right: -57%; 
 }
 .score-text{
+  width: 100px;
   position: absolute;
   z-index: 4;
   top: 86%;
-  left: 56%;
+  text-align: center;
 }
 .key-list-container {
   margin-top: 40px;
