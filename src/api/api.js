@@ -25,11 +25,11 @@ const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
   }
 };
 
-export const checkNickname = (nickname) =>
-  request(`happydaeng/nickname?nickname=${nickname}`, 'GET');
+export const checkNickname = (data) =>
+  request(`happydaeng/member`, 'POST', data);
 
 export const registerRanking = (data) =>
-  request(`/happydaeng/rank`, 'POST', data);
+  request(`happydaeng/rank`, 'POST', data);
 
 export const fetchRankings = (memberNo, topRankSize) =>
   request(

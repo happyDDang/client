@@ -28,6 +28,10 @@ import audioPlayer from '../composable/audioPlayer.js';
 
 import { fetchRankings } from '../api/api.js';
 
+import { useUserStore } from '../stores/userStore.js';
+
+const userStore = useUserStore();
+
 const rankings = ref([
   { nickname: 'Alice', score: 100 },
   { nickname: 'Bob', score: 80 },
@@ -40,10 +44,12 @@ const myRank = ref({ name: 'You', score: 50 });
 
 const loadRankings = async () => {
   try {
-    /**
-     * @fix params (memberNo, 5) 으로 요청.
-     */
-    const response = await fetchRankings(1, 5);
+    const memberNo = userStore.memberNo;
+
+    const response = await fetchRankings(memberNo, 5);
+
+    console.log('rank 응답', response.data);
+
     rankings.value = response.data.value.top_rank || [];
     myRank.value = response.data.value.my_rank || {};
   } catch (error) {

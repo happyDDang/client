@@ -2,12 +2,11 @@ import { defineStore } from 'pinia';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    memberNo: null as number | null,
+    memberNo: null,
   }),
   actions: {
-    setMemberNo(memberNo: number) {
+    setMemberNo(memberNo) {
       this.memberNo = memberNo;
     },
   },
-  //   persist: true, // 새로고침 후에도 유지하고 싶다면 사용 가능
 });

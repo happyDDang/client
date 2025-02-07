@@ -108,7 +108,9 @@ import ArrowSvg from '../components/Arrow.vue';
 
 import audioPlayer from '../composable/audioPlayer.js';
 
-import { checkNickname } from '../api/api.js';
+import { checkNickname, registerRanking } from '../api/api.js';
+
+import { useUserStore } from '../stores/userStore.js';
 
 // Import images directly
 import Dog1_1 from '../assets/dog1_1.png';
@@ -139,6 +141,8 @@ import ScoreDog from '../assets/score_dog.png';
 import Bone from '../assets/bone.png';
 
 const router = useRouter();
+
+const userStore = useUserStore();
 
 const images = [
   [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
@@ -204,7 +208,7 @@ const startTimer = () => {
   timerWidth.value = 100;
   const timerInterval = setInterval(() => {
     if (timerWidth.value > 0) {
-      timerWidth.value -= 5;
+      timerWidth.value -= 50;
     } else {
       audioPlayer.stopSound('gameStart');
       audioPlayer.playSound('gameOver');
@@ -290,14 +294,28 @@ const handleKeyPress = (event) => {
 };
 
 const goToRank = async () => {
-  if (nickname.value.trim()) {
-    router.push('/rank');
-  }
-
   try {
-    const response = await checkNickname(nickname.value);
-    const isDuplicated = response.data.value.duplicated;
+    const response = await checkNickname({
+      nickname: nickname.value,
+    });
+
+    console.log('@', response.value);
+
+    const isDuplicated = response.value.duplicated;
+
     if (!isDuplicated && nickname.value.trim()) {
+      userStore.setMemberNo(response.value.member.member_no);
+
+      try {
+        await registerRanking({
+          member_no: response.value.member.member_no,
+          nickname: nickname.value,
+          score: score.value,
+        });
+      } catch (rankingError) {
+        console.error('Failed to register ranking:', rankingError);
+      }
+
       router.push('/rank');
     } else {
       alert('닉네임 중복입니다. 다른 닉네임을 사용해주세요.');
