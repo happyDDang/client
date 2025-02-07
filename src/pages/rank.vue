@@ -1,21 +1,33 @@
 <template>
   <div class="rank-container">
-    <h1>Ranking</h1>
-    <div class="rank-list">
-      <div v-for="(player, index) in rankings" :key="index" class="rank-item">
-        <p>{{ index + 1 }}등 {{ player.nickname }} - {{ player.score }} pts</p>
+    <div class="rank-box">
+      <h1 class="rank-title">Ranking</h1>
+      <div class="rank-list">
+        <div v-for="(player, index) in rankings" :key="index" class="rank-item">
+          <span class="rank-info">{{ index + 1 }}등</span>
+          <span class="rank-nickname">{{ player.nickname }}</span>
+          <div class="rank-point">{{ player.score }} pts</div>
+        </div>
+        <div class="rank-item my-rank">
+          <img class="me" :src="Star" alt="Star" />
+          <span class="rank-info">{{ myRank.rank }}등</span>
+          <span class="rank-nickname">{{ myRank.nickname }}</span>
+          <div class="rank-point">{{ myRank.score }} pts</div>
+        </div>
       </div>
     </div>
-    <div class="my-rank">
-      <h2>내 등수: {{ myRank.rank }}등</h2>
-      <p>{{ myRank.nickname }}: {{ myRank.score }} pts</p>
+    <div class="button-wrapper">
+      <button
+        class="btnFloat btnBlueGreen button1"
+        @click="backToGame"
+      ></button>
     </div>
-    <button class="back-button" @click="backToGame">Back to Game</button>
   </div>
 </template>
 
 <script setup>
 import './rank.css';
+import Star from '../assets/star.png';
 
 import { ref, onMounted } from 'vue';
 
@@ -33,9 +45,12 @@ const rankings = ref([
   { nickname: 'Charlie', score: 60 },
   { nickname: 'Dave', score: 40 },
   { nickname: 'Eve', score: 20 },
+  { nickname: 'Eve', score: 20 },
+  { nickname: 'Eve', score: 20 },
+  { nickname: 'Eve', score: 20 },
 ]);
 
-const myRank = ref({ name: 'You', score: 50 });
+const myRank = ref({ rank: 100, nickname: 'You', score: 50 });
 
 const loadRankings = async () => {
   try {
