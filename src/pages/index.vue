@@ -119,11 +119,11 @@ import Dog1_2 from '../assets/dog1_2.png';
 import Dog1_3 from '../assets/dog1_3.png';
 import Dog1_4 from '../assets/dog1_4.png';
 import Dog1_5 from '../assets/dog1_5.png';
-// import Dog2_1 from '../assets/dog2_1.png';
-// import Dog2_2 from '../assets/dog2_2.png';
-// import Dog2_3 from '../assets/dog2_3.png';
-// import Dog2_4 from '../assets/dog2_4.png';
-// import Dog2_5 from '../assets/dog2_5.png';
+import Dog2_1 from '../assets/dog2_1.png';
+import Dog2_2 from '../assets/dog2_2.png';
+import Dog2_3 from '../assets/dog2_3.png';
+import Dog2_4 from '../assets/dog2_4.png';
+import Dog2_5 from '../assets/dog2_5.png';
 import Dog3_1 from '../assets/dog3_1.png';
 import Dog3_2 from '../assets/dog3_2.png';
 import Dog3_3 from '../assets/dog3_3.png';
@@ -134,6 +134,11 @@ import Dog4_2 from '../assets/dog4_2.png';
 import Dog4_3 from '../assets/dog4_3.png';
 import Dog4_4 from '../assets/dog4_4.png';
 import Dog4_5 from '../assets/dog4_5.png';
+import Dog5_1 from '../assets/dog5_1.png';
+import Dog5_2 from '../assets/dog5_2.png';
+import Dog5_3 from '../assets/dog5_3.png';
+import Dog5_4 from '../assets/dog5_4.png';
+import Dog5_5 from '../assets/dog5_5.png';
 import Clock from '../assets/clock.png';
 import ShowerHead from '../assets/shower_head.png';
 import Bubble from '../assets/bubble.png';
@@ -147,10 +152,10 @@ const userStore = useUserStore();
 
 const images = [
   [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
-  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog2_1, Dog2_2, Dog2_3, Dog2_4, Dog2_5],
   [Dog3_1, Dog3_2, Dog3_3, Dog3_4, Dog3_5],
   [Dog4_1, Dog4_2, Dog4_3, Dog4_4, Dog4_5],
-  [Dog1_1, Dog1_2, Dog1_3, Dog1_4, Dog1_5],
+  [Dog5_1, Dog5_2, Dog5_3, Dog5_4, Dog5_5],
 ];
 
 const currentImageIndex = ref(0);
@@ -209,7 +214,7 @@ const startTimer = () => {
   timerWidth.value = 100;
   const timerInterval = setInterval(() => {
     if (timerWidth.value > 0) {
-      timerWidth.value -= 50;
+      timerWidth.value -= 5;
     } else {
       audioPlayer.stopSound('gameStart');
       audioPlayer.playSound('gameOver');
@@ -300,8 +305,6 @@ const goToRank = async () => {
       nickname: nickname.value,
     });
 
-    console.log('@', response.value);
-
     const isDuplicated = response.value.duplicated;
 
     if (!isDuplicated && nickname.value.trim()) {
@@ -316,7 +319,6 @@ const goToRank = async () => {
       } catch (rankingError) {
         console.error('Failed to register ranking:', rankingError);
       }
-
       router.push('/rank');
     } else {
       alert('닉네임 중복입니다. 다른 닉네임을 사용해주세요.');
