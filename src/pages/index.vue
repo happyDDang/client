@@ -82,6 +82,7 @@
       <div v-else>
         <div class="popup-overlay">
           <div class="popup2">
+            <img :src="ScoreDog" class="score-dog-2" />
             <input
               type="text"
               v-model="nickname"

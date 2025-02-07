@@ -194,7 +194,7 @@ body {
 .key-list-box {
   width: 100%;
   background: white;
-  padding: 10px;
+  padding: 5px 10px 5px 10px;
   border: 7px #54a7cc solid;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -391,11 +391,17 @@ body {
 }
 .popup2 {
   background: white;
-  padding: 5px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 275px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.score-dog-2{
+  width: 50px;
   margin: auto;
 }
 .nickname-input {
@@ -405,12 +411,15 @@ body {
   width: 80%;
   border: 1px solid #ddd;
   border-radius: 8px;
+  text-align: center;
+  margin: auto;
 }
 .rank-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 .rank-button {
+  margin-top: 20px;
   background-color: #3498db;
   color: white;
   font-size: 1.2rem;
