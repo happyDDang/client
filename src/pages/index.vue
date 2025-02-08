@@ -1,8 +1,5 @@
 <template>
   <div class="app">
-    <div>
-      <button @click="notify">Notify !</button>
-    </div>
     <div v-if="showPopup" class="popup-overlay">
       <div class="logo-box">
         <img class="logo" :src="Logo" alt="logo" />
