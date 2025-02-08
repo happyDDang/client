@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <div>
+      <button @click="notify">Notify !</button>
+    </div>
     <div v-if="showPopup" class="popup-overlay">
       <div class="logo-box">
         <img class="logo" :src="Logo" alt="logo" />
@@ -105,13 +108,14 @@ import './index.css';
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import ArrowSvg from '../components/Arrow.vue';
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import audioPlayer from '../composable/audioPlayer.js';
 
 import { checkNickname, registerRanking } from '../api/api.js';
 
 import { useUserStore } from '../stores/userStore.js';
+
+import { toast } from 'vue3-toastify';
 
 // Import images directly
 import Dog1_1 from '../assets/dog1_1.png';
@@ -336,14 +340,20 @@ const goToRank = async () => {
           score: score.value,
         });
       } catch (rankingError) {
-        console.error('Failed to register ranking:', rankingError);
+        toast.error('랭킹 등록에 실패하였습니다. 잠시 후에 시도해주세요.', {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
       router.push('/rank');
     } else {
-      alert('닉네임 중복입니다. 다른 닉네임을 사용해주세요.');
+      toast.warn('닉네임 중복입니다. 다른 닉네임을 사용해주세요.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   } catch (error) {
-    console.error('Failed to check nickname duplication:', error);
+    toast.error('닉네임 중복 검사에 실패하였습니다. 잠시 후에 시도해주세요.', {
+      position: toast.POSITION.TOP_CENTER,
+    });
   }
 };
 

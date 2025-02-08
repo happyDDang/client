@@ -37,6 +37,8 @@ import { fetchRankings } from '../api/api.js';
 
 import { useUserStore } from '../stores/userStore.js';
 
+import { toast } from 'vue3-toastify';
+
 const userStore = useUserStore();
 
 const rankings = ref([
@@ -61,7 +63,9 @@ const loadRankings = async () => {
     rankings.value = response.value.top_rank || [];
     myRank.value = response.value.my_rank || {};
   } catch (error) {
-    console.error('Failed to load rankings:', error);
+    toast.error('랭킹 조회에 실패하였습니다.', {
+      position: toast.POSITION.TOP_CENTER,
+    });
   }
 };
 
