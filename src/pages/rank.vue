@@ -17,10 +17,11 @@
       </div>
     </div>
     <div class="button-wrapper">
-      <button
+      <!-- <button
         class="btnFloat btnBlueGreen button1"
         @click="backToGame"
-      ></button>
+      ></button> -->
+      <button class="btn-jittery" @click="backToGame">RESTART</button>
     </div>
   </div>
 </template>

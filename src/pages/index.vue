@@ -59,7 +59,13 @@
                 />
               </div>
             </div>
-            <img :src="currentImage" alt="Random Image" class="dog-image" />
+            <img
+              :src="currentImage"
+              alt="Random Image"
+              class="dog-image"
+              :class="{ jelly: isFinished }"
+              :id="'dog-image'"
+            />
           </div>
         </div>
         <div class="key-list-container">
@@ -220,6 +226,8 @@ const formattedKeyDirection = computed(() => {
 });
 
 const startGame = () => {
+  audioPlayer.playSound('dogBark');
+
   setTimeout(() => {
     score.value = 0;
     window.addEventListener('keydown', handleKeyPress);
@@ -299,15 +307,19 @@ const handleKeyPress = (event) => {
     if (currentKeyIndex.value >= keyList.value.length) {
       isFinished.value = true;
 
-      setTimeout(() => {
-        audioPlayer.playSound('dogBark');
-        score.value += 20;
-        currentKeyIndex.value = 0;
-        currentImageIndex.value = Math.floor(Math.random() * images.length);
-        currentDogStep.value = 0;
-        isFinished.value = false;
-        generateRandomKeys();
-      }, 500);
+      const dog = document.getElementById('dog-image');
+      audioPlayer.playSound('dogBark');
+      score.value += 20;
+
+      dog.addEventListener('animationend', () => {
+        setTimeout(() => {
+          currentKeyIndex.value = 0;
+          currentImageIndex.value = Math.floor(Math.random() * images.length);
+          currentDogStep.value = 0;
+          isFinished.value = false;
+          generateRandomKeys();
+        }, 500);
+      });
     }
   } else {
     wrongInputSound();

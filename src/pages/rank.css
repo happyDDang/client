@@ -157,3 +157,74 @@
 .btnBlueGreen.btnBorder:hover {
   box-shadow: 0px 0px 0px 5px #21825B;
 }
+
+.btn-jittery {
+  display: block;
+  position: relative;
+  background: #00ae68;
+  padding: 0;
+  margin: 10px 20px 10px 0;
+  font-weight: 600;
+  font-size: 30px;
+  width: 150px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  animation: jittery 4s infinite;
+  height: 50px;
+}
+
+@keyframes jittery {
+  5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+}
+
+.jelly {
+  animation: jelly 0.5s;
+}
+
+@keyframes jelly {
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    transform: scale(0.95, 1.05);
+  }
+}
