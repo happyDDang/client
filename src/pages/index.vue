@@ -303,9 +303,11 @@ const handleKeyPress = (event) => {
     }
   } else {
     wrongInputSound();
-    errorMessage.value = 'Retry!';
-    currentDogStep.value = 0;
 
+    currentDogStep.value = 0;
+    currentKeyIndex.value = 0;
+
+    errorMessage.value = 'Retry!';
     isWrongKey.value = true;
 
     isFilled.value = Array(8).fill(false);
@@ -313,8 +315,6 @@ const handleKeyPress = (event) => {
     setTimeout(() => {
       errorMessage.value = '';
       isWrongKey.value = false;
-
-      currentKeyIndex.value = 0;
     }, 500);
   }
 };
