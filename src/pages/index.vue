@@ -29,7 +29,7 @@
         </div>
         <div class="image-container">
           <div>
-            <div class="animated-icons">
+            <div v-if="!isFinished" class="animated-icons">
               <div
                 class="resize-icon-big"
                 :style="{
@@ -171,6 +171,7 @@ const currentKeyIndex = ref(0);
 const isWrongKey = ref(false);
 const isFilled = ref(Array(8).fill(false));
 const is10SecondLeft = ref(false);
+const isFinished = ref(false);
 
 const animationPosition = ref([
   [
@@ -219,13 +220,15 @@ const formattedKeyDirection = computed(() => {
 });
 
 const startGame = () => {
-  score.value = 0;
-  window.addEventListener('keydown', handleKeyPress);
-  showPopup.value = false;
-  audioPlayer.playSound('gameStart');
-  audioPlayer.stopSound('gameOver');
-  generateRandomKeys();
-  startTimer();
+  setTimeout(() => {
+    score.value = 0;
+    window.addEventListener('keydown', handleKeyPress);
+    showPopup.value = false;
+    audioPlayer.playSound('gameStart');
+    audioPlayer.stopSound('gameOver');
+    generateRandomKeys();
+    startTimer();
+  }, 100);
 };
 
 const startTimer = () => {
@@ -294,12 +297,17 @@ const handleKeyPress = (event) => {
 
     // 다음 강아지로 넘어가기
     if (currentKeyIndex.value >= keyList.value.length) {
-      audioPlayer.playSound('dogBark');
-      score.value += 20;
-      currentKeyIndex.value = 0;
-      currentImageIndex.value = Math.floor(Math.random() * images.length);
-      currentDogStep.value = 0;
-      generateRandomKeys();
+      isFinished.value = true;
+
+      setTimeout(() => {
+        audioPlayer.playSound('dogBark');
+        score.value += 20;
+        currentKeyIndex.value = 0;
+        currentImageIndex.value = Math.floor(Math.random() * images.length);
+        currentDogStep.value = 0;
+        isFinished.value = false;
+        generateRandomKeys();
+      }, 500);
     }
   } else {
     wrongInputSound();
