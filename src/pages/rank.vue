@@ -59,7 +59,7 @@ const loadRankings = async () => {
   try {
     const memberNo = userStore.memberNo;
 
-    const response = await fetchRankings(memberNo, 5);
+    const response = await fetchRankings(memberNo, 7);
 
     rankings.value = response.value.top_rank || [];
     myRank.value = response.value.my_rank || {};
