@@ -1,4 +1,4 @@
-const BASE_URL = 'https://52.78.219.178:5000/'; // API 기본 URL (필요 시 변경)
+const BASE_URL = 'https://happy-daeng.com/'; // API 기본 URL (필요 시 변경)
 
 const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const config = {
@@ -26,13 +26,13 @@ const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
 };
 
 export const checkNickname = (data) =>
-  request(`happydaeng/member`, 'POST', data);
+  request(`member`, 'POST', data);
 
 export const registerRanking = (data) =>
-  request(`happydaeng/rank`, 'POST', data);
+  request(`rank`, 'POST', data);
 
 export const fetchRankings = (memberNo, topRankSize) =>
   request(
-    `happydaeng/rank?member_no=${memberNo}&top_rank_size=${topRankSize}`,
+    `rank?member_no=${memberNo}&top_rank_size=${topRankSize}`,
     'GET'
   );
