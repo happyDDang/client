@@ -25,14 +25,9 @@ const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
   }
 };
 
-export const checkNickname = (data) =>
-  request(`member`, 'POST', data);
+export const checkNickname = (data) => request(`member`, 'POST', data);
 
-export const registerRanking = (data) =>
-  request(`rank`, 'POST', data);
+export const registerRanking = (data) => request(`rank`, 'POST', data);
 
 export const fetchRankings = (memberNo, topRankSize) =>
-  request(
-    `rank?member_no=${memberNo}&top_rank_size=${topRankSize}`,
-    'GET'
-  );
+  request(`rank?member_no=${memberNo}&top_rank_size=${topRankSize}`, 'GET');
