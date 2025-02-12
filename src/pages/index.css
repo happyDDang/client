@@ -247,6 +247,37 @@ body {
 	margin-left: -10px;
 	margin-bottom: -10px;
 }
+.score-message {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  background-color: #54a7cc;
+  border: 1px solid #54a7cc;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 15px;
+  width: 100px;
+  padding: 1px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 15px;
+}
+.score-message:after {
+  content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	border-top-color: #54a7cc;
+	border-bottom: 0;
+	margin-left: -10px;
+	margin-bottom: -10px;
+}
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -400,6 +431,7 @@ body {
   margin: auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .score-dog-2{
   width: 50px;

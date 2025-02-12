@@ -57,7 +57,8 @@
 
 .rank-nickname {
   margin: 10px;
-  width: 50px;
+  width: fit-content;
+  min-width: 50px;
 }
 
 .rank-point {

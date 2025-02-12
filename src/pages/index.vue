@@ -88,6 +88,7 @@
       <div v-else>
         <div class="popup-overlay">
           <div class="popup2">
+            <p class="score-message">{{ score }}점이다 멍! 🐶</p>
             <img :src="ScoreDog" class="score-dog-2" />
             <input
               type="text"
