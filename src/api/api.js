@@ -1,4 +1,4 @@
-const BASE_URL = 'https://happy-daeng.com/'; // API 기본 URL (필요 시 변경)
+const BASE_URL = 'https://happy-ddang.derek-94.deno.net/'; // API 기본 URL (필요 시 변경)
 
 const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
   const config = {
