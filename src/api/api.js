@@ -14,13 +14,23 @@ const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
   }
 
   try {
+    console.log('API Request:', `${BASE_URL}${endpoint}`, config);
     const response = await fetch(`${BASE_URL}${endpoint}`, config);
+    console.log('API Response:', response.status, response.headers);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error('API Error Response:', errorText);
+      throw new Error(
+        `HTTP error! status: ${response.status}, response: ${errorText}`
+      );
     }
-    return await response.json();
+    const data = await response.json();
+    console.log('API Success Data:', data);
+    return data;
   } catch (error) {
     console.error('API 요청 중 오류 발생:', error.message);
+    console.error('Full error:', error);
     throw error;
   }
 };
