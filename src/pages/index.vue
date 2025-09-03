@@ -288,13 +288,16 @@ const generateRandomKeys = () => {
 };
 
 const handleVirtualKeyPress = (event) => {
-  handleKeyPress(event);
+  console.log('Virtual key pressed:', event.key);
+  console.log('Expected key:', keyList.value[currentKeyIndex.value]);
+  handleKeyPress({ key: event.key });
 };
 
 const handleKeyPress = (event) => {
   if (timerWidth.value <= 0) return;
 
   const key = event.key || event;
+  console.log('Comparing:', key, 'vs', keyList.value[currentKeyIndex.value]);
   if (keyList.value[currentKeyIndex.value] === key) {
     isFilled.value[currentKeyIndex.value] = true;
     errorMessage.value = '';

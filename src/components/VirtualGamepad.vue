@@ -5,32 +5,32 @@
       <div class="dpad-container">
         <button
           class="dpad-btn dpad-up"
-          @touchstart="handleTouch('ArrowUp')"
-          @click="handleClick('ArrowUp')"
+          @touchstart="(e) => handleTouch(e, 'ArrowUp')"
+          @click="(e) => handleClick(e, 'ArrowUp')"
         >
           <div class="dpad-arrow up-arrow">▲</div>
         </button>
         <div class="dpad-middle-row">
           <button
             class="dpad-btn dpad-left"
-            @touchstart="handleTouch('ArrowLeft')"
-            @click="handleClick('ArrowLeft')"
+            @touchstart="(e) => handleTouch(e, 'ArrowLeft')"
+            @click="(e) => handleClick(e, 'ArrowLeft')"
           >
             <div class="dpad-arrow left-arrow">◄</div>
           </button>
           <div class="dpad-center"></div>
           <button
             class="dpad-btn dpad-right"
-            @touchstart="handleTouch('ArrowRight')"
-            @click="handleClick('ArrowRight')"
+            @touchstart="(e) => handleTouch(e, 'ArrowRight')"
+            @click="(e) => handleClick(e, 'ArrowRight')"
           >
             <div class="dpad-arrow right-arrow">►</div>
           </button>
         </div>
         <button
           class="dpad-btn dpad-down"
-          @touchstart="handleTouch('ArrowDown')"
-          @click="handleClick('ArrowDown')"
+          @touchstart="(e) => handleTouch(e, 'ArrowDown')"
+          @click="(e) => handleClick(e, 'ArrowDown')"
         >
           <div class="dpad-arrow down-arrow">▼</div>
         </button>
@@ -40,8 +40,8 @@
       <div class="action-container">
         <button
           class="action-btn space-btn"
-          @touchstart="handleTouch(' ')"
-          @click="handleClick(' ')"
+          @touchstart="(e) => handleTouch(e, ' ')"
+          @click="(e) => handleClick(e, ' ')"
         >
           SPACE
         </button>
@@ -62,7 +62,10 @@ defineProps({
 
 const emit = defineEmits(['keypress']);
 
-const handleTouch = (key) => {
+const handleTouch = (event, key) => {
+  event.preventDefault();
+  event.stopPropagation();
+
   // 터치 시 haptic feedback (지원하는 기기에서)
   if (navigator.vibrate) {
     navigator.vibrate(50);
@@ -70,11 +73,14 @@ const handleTouch = (key) => {
   handleKeyPress(key);
 };
 
-const handleClick = (key) => {
+const handleClick = (event, key) => {
+  event.preventDefault();
+  event.stopPropagation();
   handleKeyPress(key);
 };
 
 const handleKeyPress = (key) => {
+  console.log('VirtualGamepad emitting key:', key);
   emit('keypress', { key });
 };
 </script>
