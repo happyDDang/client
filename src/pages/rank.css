@@ -152,11 +152,11 @@
 
 /* BORDER */
 .btnBlueGreen.btnBorder {
-  box-shadow: 0px 0px 0px 0px #21825B;
+  box-shadow: 0px 0px 0px 0px #21825b;
 }
 
 .btnBlueGreen.btnBorder:hover {
-  box-shadow: 0px 0px 0px 5px #21825B;
+  box-shadow: 0px 0px 0px 5px #21825b;
 }
 
 .btn-jittery {
@@ -243,9 +243,9 @@
 
   .rank-box {
     width: 95%;
-    height: 75%;
+    height: 85%;
     font-size: 16px;
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
   .rank-title {
@@ -255,32 +255,32 @@
   }
 
   .rank-list {
-    padding: 10px 0;
-    gap: 15px;
+    padding: 5px 0;
+    gap: 8px;
   }
 
   .rank-item {
-    font-size: 16px;
-    height: 50px;
+    font-size: 14px;
+    height: 40px;
     width: 95%;
-    margin-top: 5px;
+    margin-top: 3px;
   }
 
   .rank-info {
-    margin: 12px 15px;
-    width: 40px;
-    font-size: 14px;
+    margin: 12px 25px;
+    width: 35px;
+    font-size: 12px;
   }
 
   .rank-nickname {
-    margin: 12px 10px;
-    font-size: 16px;
+    margin: 12px 8px;
+    font-size: 14px;
     flex: 1;
   }
 
   .rank-point {
-    margin-right: 15px;
-    font-size: 14px;
+    margin-right: 12px;
+    font-size: 12px;
   }
 
   .me {
@@ -318,19 +318,19 @@
 @media screen and (max-width: 480px) {
   .rank-box {
     width: 98%;
-    height: 70%;
-    margin-top: 15px;
+    height: 80%;
+    margin-top: 10px;
   }
 
   .rank-title {
-    font-size: 20px;
-    height: 35px;
-    padding: 12px 0;
+    font-size: 18px;
+    height: 30px;
+    padding: 8px 0;
   }
 
   .rank-item {
-    font-size: 14px;
-    height: 45px;
+    font-size: 13px;
+    height: 35px;
   }
 
   .rank-info {

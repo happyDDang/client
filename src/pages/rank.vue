@@ -48,9 +48,6 @@ const rankings = ref([
   { nickname: 'Charlie', score: 60 },
   { nickname: 'Dave', score: 40 },
   { nickname: 'Eve', score: 20 },
-  { nickname: 'Eve', score: 20 },
-  { nickname: 'Eve', score: 20 },
-  { nickname: 'Eve', score: 20 },
 ]);
 
 const myRank = ref({ rank: 100, nickname: 'You', score: 50 });
@@ -59,7 +56,7 @@ const loadRankings = async () => {
   try {
     const memberNo = userStore.memberNo;
 
-    const response = await fetchRankings(memberNo, 7);
+    const response = await fetchRankings(memberNo, 5);
 
     rankings.value = response.value.top_rank || [];
     myRank.value = response.value.my_rank || {};
