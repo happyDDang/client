@@ -22,7 +22,7 @@ body {
   width: 400px;
 }
 
-.timer-box{
+.timer-box {
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -45,9 +45,9 @@ body {
 
 .timer-bar {
   height: 20px;
-  background: #F2484C;
+  background: #f2484c;
   transition: width 1s linear;
-  border: 2px #082D48 solid;
+  border: 2px #082d48 solid;
   border-radius: 5px;
 }
 
@@ -58,10 +58,10 @@ body {
 
 .shake-icon {
   color: white;
-  animation: shake 0.5s infinite; /* 떨림 애니메이션 */  
+  animation: shake 0.5s infinite; /* 떨림 애니메이션 */
 }
 
-.clock-icon{
+.clock-icon {
   width: 80px;
   display: block;
 }
@@ -136,7 +136,7 @@ body {
     transform: scale(0.7); /* 위치 고정 */
   }
   100% {
-    transform: scale(1.0); /* 위치 고정 */
+    transform: scale(1); /* 위치 고정 */
   }
 }
 @keyframes resize-small {
@@ -155,31 +155,31 @@ body {
   right: 60px;
   font-size: 18px;
   font-weight: bold;
-  color: #F2484C;
+  color: #f2484c;
   width: 80px;
   height: 100px;
 }
-.score-box{
+.score-box {
   position: relative;
-  display:flex;
+  display: flex;
   flex-direction: column;
   width: 80px;
   height: 100px;
 }
-.score-dog{
+.score-dog {
   width: 100px;
   position: absolute;
-  z-index:4;
+  z-index: 4;
   top: 0;
 }
-.score-bone{
+.score-bone {
   width: 150px;
   position: absolute;
   z-index: 3;
   top: 26%;
-  right: -57%; 
+  right: -57%;
 }
-.score-text{
+.score-text {
   width: 100px;
   position: absolute;
   z-index: 4;
@@ -215,7 +215,7 @@ body {
   justify-self: space-between;
   gap: 5px;
 }
-.key{
+.key {
   flex: 1;
 }
 .error-message {
@@ -236,16 +236,16 @@ body {
 }
 .error-message:after {
   content: '';
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border: 10px solid transparent;
-	border-top-color: #54a7cc;
-	border-bottom: 0;
-	margin-left: -10px;
-	margin-bottom: -10px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #54a7cc;
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
 }
 .score-message {
   margin-top: 20px;
@@ -267,16 +267,16 @@ body {
 }
 .score-message:after {
   content: '';
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border: 10px solid transparent;
-	border-top-color: #54a7cc;
-	border-bottom: 0;
-	margin-left: -10px;
-	margin-bottom: -10px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #54a7cc;
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
 }
 .popup-overlay {
   position: fixed;
@@ -292,16 +292,16 @@ body {
 }
 /* 3D Button */
 .btn-3d {
-	position: relative;
-	display: inline-block;
-	font-size: 22px;
-	padding: 20px 60px;
-	color: white;
-	margin-bottom: 10px;
-	border-radius: 6px;
-	text-align: center;
-	transition: top .01s linear;
-	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  position: relative;
+  display: inline-block;
+  font-size: 22px;
+  padding: 20px 60px;
+  color: white;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  text-align: center;
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   text-decoration: none;
 }
 
@@ -433,7 +433,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
-.score-dog-2{
+.score-dog-2 {
   width: 50px;
   margin: auto;
 }
@@ -481,6 +481,7 @@ body {
 .animated-icons {
   position: relative;
   pointer-events: none;
+  transform: translateY(20px) translateX(-40px);
 }
 
 .animated-icons img {
@@ -542,4 +543,235 @@ body {
   z-index: 1;
   border-radius: 8px;
   margin-top: 20px;
+}
+
+/* ================================
+   모바일 반응형 미디어 쿼리
+   ================================ */
+
+@media screen and (max-width: 768px) {
+  body {
+    background-size: cover;
+  }
+
+  .app {
+    padding: 10px;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* 타이머 컨테이너 모바일 최적화 */
+  .timer-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 90%;
+    max-width: 300px;
+    transform: none;
+  }
+
+  .timer-bar-box {
+    width: 200px;
+    top: 25%;
+    left: 18%;
+  }
+
+  .clock {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* 점수 컨테이너 모바일 최적화 */
+  .score-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-dog {
+    width: 60px;
+    left: 10px;
+  }
+
+  .score-bone {
+    width: 70px;
+    right: 4px;
+    top: 23%;
+  }
+
+  .score-text {
+    font-size: 12px;
+    right: 15px;
+    top: 50%;
+    width: 50px;
+  }
+
+  /* 강아지 이미지 모바일 최적화 */
+  .dog-image {
+    width: 300px;
+    height: 300px;
+    margin-top: -90%;
+  }
+
+  /* 애니메이션 요소들 크기 조정 */
+  .resize-icon-big,
+  .resize-icon-small {
+    width: 80px;
+    height: 80px;
+    z-index: 1;
+  }
+
+  .swing-icon {
+    width: 60px;
+    z-index: 1;
+  }
+
+  .animated-icons {
+    z-index: 1;
+    transform: translateY(-250px) translateX(-30px);
+  }
+
+  /* 키 목록 컨테이너 모바일 최적화 */
+  .key-list-container {
+    position: fixed;
+    left: 47% !important;
+    transform: translateX(-50%) !important;
+    bottom: 25%;
+    width: 90%;
+    z-index: 100;
+  }
+
+  .keys {
+    font-size: 20px;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .key-list-box {
+    margin: 0 auto;
+  }
+
+  /* 팝업 모바일 최적화 */
+  .popup,
+  .popup2 {
+    width: 90%;
+    max-width: 300px;
+    padding: 15px;
+  }
+
+  .logo-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-box img {
+    max-width: 200px;
+  }
+
+  .popup {
+    position: static;
+    transform: none;
+    margin-top: 20px;
+  }
+
+  .btn-3d {
+    font-size: 18px;
+    padding: 15px 30px;
+  }
+
+  .nickname-input {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .rank-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .score-dog-2 {
+    width: 40px;
+  }
+
+  /* 에러 메시지 모바일 최적화 */
+  .error-message,
+  .score-message {
+    font-size: 16px;
+    width: 120px;
+    height: 40px;
+  }
+}
+
+/* 작은 모바일 화면 (아이폰 SE 등) */
+@media screen and (max-width: 480px) {
+  .timer-container {
+    left: 5px;
+    width: 95%;
+    max-width: 280px;
+  }
+
+  .timer-bar-box {
+    width: 180px;
+    left: 18%;
+  }
+
+  .dog-image {
+    width: 250px;
+    height: 250px;
+  }
+
+  .key-list-container {
+    left: 46% !important;
+    transform: translateX(-50%) !important;
+    bottom: 22%;
+  }
+
+  .keys {
+    font-size: 18px;
+  }
+
+  .animated-icons {
+    transform: translateY(-220px) translateX(-80px);
+  }
+
+  .score-container {
+    width: 70px;
+    height: 70px;
+  }
+
+  .score-dog {
+    width: 50px;
+    left: 8px;
+  }
+
+  .score-bone {
+    width: 60px;
+    right: 16px;
+    top: 20%;
+  }
+
+  .score-text {
+    font-size: 11px;
+    right: 24px;
+    top: 43%;
+    width: 45px;
+  }
+
+  .popup,
+  .popup2 {
+    width: 95%;
+    max-width: 280px;
+    padding: 12px;
+  }
+
+  .btn-3d {
+    font-size: 16px;
+    padding: 12px 25px;
+  }
 }

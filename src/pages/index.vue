@@ -103,6 +103,12 @@
         </div>
       </div>
     </div>
+
+    <!-- 가상 게임패드 (모바일용) -->
+    <VirtualGamepad
+      :showGamepad="showVirtualGamepad"
+      @keypress="handleVirtualKeyPress"
+    />
   </div>
 </template>
 
@@ -112,8 +118,10 @@ import './index.css';
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import ArrowSvg from '../components/Arrow.vue';
+import VirtualGamepad from '../components/VirtualGamepad.vue';
 
 import audioPlayer from '../composable/audioPlayer.js';
+import { isMobile } from '../utils/deviceDetector.js';
 
 import { checkNickname, registerRanking } from '../api/api.js';
 
@@ -179,6 +187,7 @@ const isWrongKey = ref(false);
 const isFilled = ref(Array(8).fill(false));
 const is10SecondLeft = ref(false);
 const isFinished = ref(false);
+const showVirtualGamepad = ref(false);
 
 const animationPosition = ref([
   [
@@ -233,6 +242,7 @@ const startGame = () => {
     score.value = 0;
     window.addEventListener('keydown', handleKeyPress);
     showPopup.value = false;
+    showVirtualGamepad.value = isMobile();
     audioPlayer.playSound('gameStart');
     audioPlayer.stopSound('gameOver');
     generateRandomKeys();
@@ -249,6 +259,7 @@ const startTimer = () => {
       audioPlayer.stopSound('gameStart');
       audioPlayer.playSound('gameOver');
       window.removeEventListener('keydown', handleKeyPress);
+      showVirtualGamepad.value = false;
       clearInterval(timerInterval);
     }
 
@@ -276,10 +287,15 @@ const generateRandomKeys = () => {
   keyList.value = randomKeys;
 };
 
+const handleVirtualKeyPress = (event) => {
+  handleKeyPress(event);
+};
+
 const handleKeyPress = (event) => {
   if (timerWidth.value <= 0) return;
 
-  if (keyList.value[currentKeyIndex.value] === event.key) {
+  const key = event.key || event;
+  if (keyList.value[currentKeyIndex.value] === key) {
     isFilled.value[currentKeyIndex.value] = true;
     errorMessage.value = '';
     currentKeyIndex.value++;
